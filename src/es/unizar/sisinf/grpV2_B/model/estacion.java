@@ -1,3 +1,5 @@
+package es.unizar.sisinf.grpV2_B.model;
+
 public class estacion {
     protected int id;
     protected String direccion;

@@ -1,3 +1,5 @@
+package es.unizar.sisinf.grpV2_B.model;
+
 public class paradaTranviaVO extends estacion{
     private String nombre;
     private String sentido;

@@ -1,3 +1,5 @@
+package es.unizar.sisinf.grpV2_B.model;
+
 public class lineaBusVO{
     private int id;
     private String nombre;
