@@ -28,16 +28,4 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>src/es/unizar/sisinf/grpV2_B/db/ConnectionManager.java</name>
-			<type>1</type>
-			<location>/home/sisinf/Desktop/Practicas/src/es/unizar/sisinf/grp1/db/ConnectionManager.java</location>
-		</link>
-		<link>
-			<name>src/es/unizar/sisinf/grpV2_B/db/PoolConnectionManager.java</name>
-			<type>1</type>
-			<location>/home/sisinf/Desktop/Practicas/src/es/unizar/sisinf/grp1/db/PoolConnectionManager.java</location>
-		</link>
-	</linkedResources>
 </projectDescription>
