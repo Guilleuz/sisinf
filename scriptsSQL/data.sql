@@ -1,5 +1,4 @@
-
-
+SET search_path TO SisInf;
 
 INSERT INTO BiziStation (id, capacity, available, direction, localitation) VALUES (1, 20, 5, 'Calle Menendez Pelayo', ST_GeomFromText('POINT(-71.12 48.31)', 4326));
 INSERT INTO TramStation (id, name, way, direction, localitation) VALUES (1, 'Casablanca', 'Avenida Academia', 'Calle emperador nr 9 ' ,ST_GeomFromText('POINT(-23.12 11.31)', 4326));
