@@ -1,16 +1,16 @@
 package es.unizar.sisinf.grpV2_B.model;
 
+import org.postgis.*;
+
 public class estacion {
     protected int id;
     protected String direccion;
-    protected double longitud;
-    protected double latitud;
+    protected PGgeometry localizacion;
 
-    public estacion(int id, String dir, double lon, double lat) {
+    public estacion(int id, String dir, PGgeometry localizacion) {
         this.id = id;
         this.direccion = dir;
-        this.longitud = lon;
-        this.latitud = lat;
+        this.localizacion = localizacion;
     }
 
     // Métodos get
@@ -22,24 +22,15 @@ public class estacion {
         return direccion;
     }
 
-    public double getLongitud() {
-        return longitud;
+    public PGgeometry getLocalizacion() {
+        return localizacion;
     }
-
-    public double getLatitud() {
-        return latitud;
-    }
-
     // Métodos set
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
 
-    public void setLongitud(double longitud) {
-        this.longitud = longitud;
-    }
-
-    public void setLatitud(double latitud) {
-        this.latitud = latitud;
+    public void setLocalizacion(PGgeometry localizacion) {
+        this.localizacion = localizacion;
     }
 }

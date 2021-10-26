@@ -1,12 +1,14 @@
 package es.unizar.sisinf.grpV2_B.model;
 
+import org.postgis.*;
+
 public class paradaTranviaVO extends estacion{
     private String nombre;
     private String sentido;
 
     // Constructor
-    public paradaTranviaVO(int id, String nombre, String sentido, String dir, double lon, double lat) {
-        super(id, dir, lon, lat);
+    public paradaTranviaVO(int id, String nombre, String sentido, String dir, PGgeometry localizacion) {
+        super(id, dir, localizacion);
         this.nombre = nombre;
         this.sentido = sentido;
     }
