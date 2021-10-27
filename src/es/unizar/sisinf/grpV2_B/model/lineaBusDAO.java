@@ -9,11 +9,11 @@ import es.unizar.sisinf.grpV2_B.db.ConnectionManager;
 
 public class lineaBusDAO{
     
-    private static String insert = "INSERT INTO BusLine(id, name, way VALUES(?,?,?)";
+    private static String insert = "INSERT INTO BusLine(id, name, way) VALUES(?,?,?)";
 	private static String findByNameAndWay = "SELECT * FROM BusLine WHERE name=? AND way=?";
     private static String findById = "SELECT * FROM BusLine WHERE id=?";
     private static String list = "SELECT * FROM BusLine";
-    private static String listWays = "SELECT * FROM BusLine WHERE=?";
+    private static String listWays = "SELECT way FROM BusLine WHERE name=?";
     
     public List<String> obtenerListado(){
         List<lineaBusVO> listaLineas = new LinkedList<lineaBusVO>();
@@ -48,7 +48,7 @@ public class lineaBusDAO{
     }
     
     public List<String> obtenerSentidos(String nombre){
-        List<lineaBusVO> listaLineas = new LinkedList<lineaBusVO>();
+        List<String> lista = new LinkedList<String>();
         Connection conn = null;
 
 		try {
@@ -58,11 +58,8 @@ public class lineaBusDAO{
             st.setString(1,nombre);
             ResultSet rs = st.executeQuery();
 
-            while(rs.next()){
-                lineaBusVO linea = new lineaBusVO(rs.getInt("id")
-                                                    ,rs.getString("name")
-                                                    ,rs.getString("way"));
-                listaLineas.add(linea);
+            while(rs.next()) {
+		lista.add(rs.getString("way"));
             }
             rs.close();
             st.close();
@@ -76,7 +73,7 @@ public class lineaBusDAO{
 			ConnectionManager.releaseConnection(conn); 
 		}
 		
-		return listaLineas;
+		return lista;
        
     
     }
