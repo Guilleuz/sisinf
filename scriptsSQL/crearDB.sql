@@ -17,22 +17,23 @@ CREATE TABLE BiziStation (
     capacity int NOT NULL, 
     available int,
     direction varchar(100) NOT NULL,
-    localitation Geometry('POINT', 4326) NOT NULL
+    localization Geometry('POINT', 4326) NOT NULL
 );
 
 
 CREATE TABLE TramStation ( 
     id int PRIMARY KEY, /* int */
+    orden int NOT NULL,
     name varchar(50) NOT NULL, 
     way varchar(50) NOT NULL,
     direction varchar(50) NOT NULL,
-    localitation Geometry('POINT', 4326) NOT NULL
+    localization Geometry('POINT', 4326) NOT NULL
 );
 
 CREATE TABLE BusStation ( 
     id int PRIMARY KEY, /* int */
     direction varchar(50) NOT NULL,
-    localitation Geometry('POINT', 4326) NOT NULL
+    localization Geometry('POINT', 4326) NOT NULL
 );
 
 CREATE TABLE BusLine ( 

@@ -1,176 +1,176 @@
 package es.unizar.sisinf.grpV2_B.model;
 
+import java.sql.*;
+import org.postgis.*;
+import org.postgresql.util.PGobject;
+import java.util.LinkedList;
+import java.util.List;
+import es.unizar.sisinf.grpV2_B.db.PoolConnectionManager;
+
 public class paradaTranviaDAO {
-  
-  private static String insertar = "INSERT INTO TramStation (id, name, way, direction, localitation VALUES(?,?,?,?,?))";
-  private static String lista = "SELECT * FROM TramStation ORDER BY id ASC";
-  private static String listaSentidos = "SELECT way FROM TramStation";
-  private static String listaOrdenada = "SELECT * FROM TramStation WHERE way = ?"
-  private static String idParada = "SELECT id FROM TramStation WHERE name = ? AND way = ?";
-  
-  public int idP(String nombre, String sentido) {
-  	int identificador = null;
-	Connection conn = null;
-	try {
 
-		conn = ConnectionManager.getConnection();
-	    	conn.getConnection();
-	   	PreparedStatement st = conn.PreparedStatement(idParada);
+	private static String insertar = "INSERT INTO TramStation (id, name, way, direction, localitation VALUES(?,?,?,?,?))";
+	private static String lista = "SELECT * FROM TramStation ORDER BY id ASC";
+	private static String listaSentidos = "SELECT way FROM TramStation";
+	private static String listaOrdenada = "SELECT * FROM TramStation WHERE way = ? ORDER BY orden";
+	private static String idParada = "SELECT id FROM TramStation WHERE name = ? AND way = ?";
 
-	    	st.setString(1,nombre);
-		st.setString(2,sentido);
-	    	ResultSet rs = st.executeQuery();
+	// devuelve id de parada segun nombre y sentido
+	public int idParada(String nombre, String sentido) throws SQLException {
+		int identificador = 0;
+		Connection conn = null;
+		try {
 
-	    	identificador = rs.getString("id");
-	    	rs.close();
-	    	st.close();
+			conn = PoolConnectionManager.getConnection();
+			PreparedStatement st = conn.prepareStatement(idParada);
 
-	} catch(SQLException se) {
-		se.printStackTrace();  
+			st.setString(1, nombre);
+			st.setString(2, sentido);
+			ResultSet rs = st.executeQuery();
 
-	} catch(Exception e) {
-		e.printStackTrace(System.err); 
-	} finally {
-		ConnectionManager.releaseConnection(conn); 
+			identificador = rs.getInt("id");
+			rs.close();
+			st.close();
+
+		} catch (SQLException se) {
+			se.printStackTrace();
+
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+		} finally {
+			PoolConnectionManager.releaseConnection(conn);
+		}
+
+		return identificador;
+
 	}
 
-	return identificador;
+	// devuelve lista de paradas ordenada del trayecto en un sentido
+	public List<paradaTranviaVO> listarOrdenada(String sentido) throws SQLException {
 
-  }
-  
-  public List<paradaTranviaVO> listarOrdenada(){
+		List<paradaTranviaVO> listaParadas = new LinkedList<paradaTranviaVO>();
+		Connection conn = null;
 
-	List<paradaTranviaVO> listaParadas = new LinkedList<paradaTranviaVO>();
-        Connection conn = null;
+		try {
+			conn = PoolConnectionManager.getConnection();
+			((org.postgresql.PGConnection) conn).addDataType("geometry", (Class<? extends PGobject>) Class.forName("org.postgis.PGgeometry"));
+			PreparedStatement lsParadas = conn.prepareStatement(listaOrdenada);
+			lsParadas.setString(1, sentido);
+			ResultSet rs = lsParadas.executeQuery();
 
-	try {
-		conn = ConnectionManager.getConnection();
-            	conn.getConnection();
-		((org.postgresql.PGConnection)conn).addDataType("geometry",Class.forName("org.postgis.PGgeometry"));
-            	PreparedStatement lsParadas = conn.PreparedStatement(lista);
+			while (rs.next()) {
+				paradaTranviaVO parada = new paradaTranviaVO(rs.getInt("id"), rs.getString("name"), rs.getString("way"), rs.getInt("orden"),
+						rs.getString("direction"), (PGgeometry) rs.getObject("localitation"));
+				listaParadas.add(parada);
+			}
+			rs.close();
+			lsParadas.close();
 
-            	ResultSet rs = lsParadas.executeQuery();
+		} catch (SQLException se) {
+			se.printStackTrace();
 
-            	while(rs.next()){
-                	paradaTranviaVO parada = new paradaTranviaVO(rs.getInt("id")
-                                                    ,rs.getString("name")
-                                                    ,rs.getString("way")
-                                                    ,rs.getString("direction")
-                                                    ,(PGgeometry)rs.getObject("localitation"));
-                	listaParadas.add(parada);
-		    }
-            	rs.close();
-            	lsParadas.close();
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+		} finally {
+			PoolConnectionManager.releaseConnection(conn);
+		}
 
-	} catch(SQLException se) {
-		se.printStackTrace();  
-
-	} catch(Exception e) {
-		e.printStackTrace(System.err); 
-	} finally {
-		ConnectionManager.releaseConnection(conn); 
+		return listaParadas;
 	}
 
-	return listaParadas;
- }
-  
-  public List<String> listarSentidos() {
-    List<String> listaSentidos = new LinkedList<String>();
-       	Connection conn = null;
+	// devuelve una lista de los sentidos
+	public List<String> listarSentidos() throws SQLException {
+		List<String> lista = new LinkedList<String>();
+		Connection conn = null;
 
-	try {
-		conn = ConnectionManager.getConnection();
-		conn.getConnection();
-		PreparedStatement lsSentidos = conn.PreparedStatement(listaSentidos);
+		try {
+			conn = PoolConnectionManager.getConnection();
+			
+			PreparedStatement lsSentidos = conn.prepareStatement(listaSentidos);
 
-		ResultSet rs = lsParadas.executeQuery();
+			ResultSet rs = lsSentidos.executeQuery();
 
-		while(rs.next()){
-		String lS = rs.getString("way");
-		listaSentidos.add(lS);
-        }
-    	rs.close();
-    	lsSentidos.close();
+			while (rs.next()) {
+				String lS = rs.getString("way");
+				lista.add(lS);
+			}
+			rs.close();
+			lsSentidos.close();
 
-	} catch(SQLException se) {
-		se.printStackTrace();  
+		} catch (SQLException se) {
+			se.printStackTrace();
 
-	} catch(Exception e) {
-		e.printStackTrace(System.err); 
-	} finally {
-		ConnectionManager.releaseConnection(conn); 
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+		} finally {
+			PoolConnectionManager.releaseConnection(conn);
+		}
+
+		return lista;
+
 	}
 
-	return listaSentidos;
-   
-  }
-  
-  public List<paradaTranviaVO> listar(){
+	// devuelve lista de paradas de tranvia
+	public List<paradaTranviaVO> listar() throws SQLException {
 
-	List<paradaTranviaVO> listaParadas = new LinkedList<paradaTranviaVO>();
-        Connection conn = null;
+		List<paradaTranviaVO> listaParadas = new LinkedList<paradaTranviaVO>();
+		Connection conn = null;
 
-	try {
-		conn = ConnectionManager.getConnection();
-            	conn.getConnection();
-            	PreparedStatement lsParadas = conn.PreparedStatement(lista);
+		try {
+			conn = PoolConnectionManager.getConnection();
+			
+			PreparedStatement lsParadas = conn.prepareStatement(lista);
 
-            	ResultSet rs = lsParadas.executeQuery();
+			ResultSet rs = lsParadas.executeQuery();
 
-           	while(rs.next()){
-                	paradaTranviaVO parada = new paradaTranviaVO(rs.getInt("id")
-                                                    ,rs.getString("name")
-                                                    ,rs.getString("way")
-                                                    ,rs.getString("direction")
-                                                    ,rs.getString("localitation"));
-                	listaParadas.add(parada);
-	}
-    	rs.close();
-    	lsParadas.close();
+			while (rs.next()) {
+				paradaTranviaVO parada = new paradaTranviaVO(rs.getInt("id"), rs.getString("name"), rs.getString("way"), rs.getInt("orden"),
+						rs.getString("direction"), (PGgeometry) rs.getObject("localitation"));
+				listaParadas.add(parada);
+			}
+			rs.close();
+			lsParadas.close();
 
-	} catch(SQLException se) {
-		se.printStackTrace();  
+		} catch (SQLException se) {
+			se.printStackTrace();
 
-	} catch(Exception e) {
-		e.printStackTrace(System.err); 
-	} finally {
-		ConnectionManager.releaseConnection(conn); 
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+		} finally {
+			PoolConnectionManager.releaseConnection(conn);
+		}
+
+		return listaParadas;
 	}
 
-	return listaParadas;
- }
-  
-  
-  public void anyadir(paradaTramVO parada){
-        Connection conn = null;
+	// añade parada de tranvia a la base de datos
+	public void anyadir(paradaTranviaVO parada) throws SQLException {
+		Connection conn = null;
 
-        try {
+		try {
 
-            conn = ConnectionManager.getConnection();
-            conn.getConnection();
-            PreparedStatement addParada = conn.PreparedStatement(insertar);
-            ResultSet rs = st.executeQuery();
+			conn = PoolConnectionManager.getConnection();
+			
+			PreparedStatement addParada = conn.prepareStatement(insertar);
+			ResultSet rs = addParada.executeQuery();
 
-            addParada.setString(1, parada.getID());
-	    addParada.setString(2, parada.getNombre());
-	    addParada.setString(3, parada.getSentido());
-            addParada.setString(4, parada.getDireccion());
-	    addParada.setString(5, parada.getLocalizacion());
-            addParada.executeUpdate();
+			addParada.setString(1, Integer.toString(parada.getID()));
+			addParada.setString(2, parada.getNombre());
+			addParada.setString(3, parada.getSentido());
+			addParada.setString(4, parada.getDireccion());
+			addParada.setObject(5, parada.getLocalizacion());
+			addParada.executeUpdate();
 
-            rs.close();
-            addParada.close();
+			rs.close();
+			addParada.close();
 
-        } catch(SQLException se) {
-            se.printStackTrace();  
-        
-        } catch(Exception e) {
-            e.printStackTrace(System.err); 
-        } finally {
-            ConnectionManager.releaseConnection(conn); 
-        }
-    }
+		} catch (SQLException se) {
+			se.printStackTrace();
+
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+		} finally {
+			PoolConnectionManager.releaseConnection(conn);
+		}
+	}
 }
-
-
-// Obtener el id de la parada segun nombre y sentido

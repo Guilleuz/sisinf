@@ -1,114 +1,113 @@
 package es.unizar.sisinf.grpV2_B.model;
 
 import java.sql.*;
-import java.util.*;
-import java.lang.*;
 import org.postgis.*;
+import org.postgresql.util.PGobject;
 
-import es.unizar.sisinf.grpV2_B.db.ConnectionManager;
+import java.util.LinkedList;
+import java.util.List;
 
-public class paradaBusDAO{
+import es.unizar.sisinf.grpV2_B.db.PoolConnectionManager;
 
-    private static String insert = "INSERT INTO BusStation(id,direction,localitation VALUES(?,?,?)";
+public class paradaBusDAO {
+
+	private static String insert = "INSERT INTO BusStation(id,direction,localitation VALUES(?,?,?)";
 	private static String findById = "SELECT * FROM BusStation WHERE id=?";
-    private static String list = "SELECT * FROM BusStation";
-	
-    
-    public paradaBusVO obtenerParada(int id){
+	private static String list = "SELECT * FROM BusStation";
+
+    // devuelve una parada segun el id
+	public paradaBusVO obtenerParada(int id) throws SQLException {
 
 		Connection conn = null;
-        paradaBusVO parada = null;
+		paradaBusVO parada = null;
 
 		try {
 
-			conn = ConnectionManager.getConnection();
-            conn.getConnection();
-            ((org.postgresql.PGConnection)conn).addDataType("geometry",Class.forName("org.postgis.PGgeometry"));
-            PreparedStatement st = conn.PreparedStatement(findById);
+			conn = PoolConnectionManager.getConnection();
+			((org.postgresql.PGConnection) conn).addDataType("geometry",
+					(Class<? extends PGobject>) Class.forName("org.postgis.PGgeometry"));
+			PreparedStatement st = conn.prepareStatement(findById);
 
-            st.setString(1,id);
-            ResultSet rs = st.executeQuery();
+			st.setString(1, Integer.toString(id));
+			ResultSet rs = st.executeQuery();
 
-            parada = new paradaBusVO(rs.getInt("id")
-                                                ,rs.getString("direction")
-                                                ,(PGgeometry)rs.getObject(3)); 
-            rs.close();
-            st.close();
+			parada = new paradaBusVO(rs.getInt("id"), rs.getString("direction"), (PGgeometry) rs.getObject(3));
+			rs.close();
+			st.close();
 
-		} catch(SQLException se) {
-			se.printStackTrace();  
-		
-		} catch(Exception e) {
-			e.printStackTrace(System.err); 
+		} catch (SQLException se) {
+			se.printStackTrace();
+
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
 		} finally {
-			ConnectionManager.releaseConnection(conn); 
+			PoolConnectionManager.releaseConnection(conn);
 		}
-		
+
 		return parada;
 
-    }
+	}
 
-    
-    public List <paradaBusVO> listar(){
+    // devuelve una lista de paradas de bus
+	public List<paradaBusVO> listar() throws SQLException {
 
 		List<paradaBusVO> listaParadas = new LinkedList<paradaBusVO>();
-        Connection conn = null;
+		Connection conn = null;
 
 		try {
-			conn = ConnectionManager.getConnection();
-            conn.getConnection();
-            ((org.postgresql.PGConnection)conn).addDataType("geometry",Class.forName("org.postgis.PGgeometry"));
-            PreparedStatement st = conn.PreparedStatement(list);
+			conn = PoolConnectionManager.getConnection();
+			((org.postgresql.PGConnection) conn).addDataType("geometry",
+					(Class<? extends PGobject>) Class.forName("org.postgis.PGgeometry"));
+			PreparedStatement st = conn.prepareStatement(list);
 
-            ResultSet rs = st.executeQuery();
+			ResultSet rs = st.executeQuery();
 
-            while(rs.next()){
-                paradaBusVO parada = new paradaBusVO(rs.getInt("id")
-                                                    ,rs.getString("direction")
-                                                    ,(PGgeometry)rs.getObject(3));
-                listaParadas.add(parada);
-            }
-            rs.close();
-            st.close();
+			while (rs.next()) {
+				paradaBusVO parada = new paradaBusVO(rs.getInt("id"), rs.getString("direction"),
+						(PGgeometry) rs.getObject(3));
+				listaParadas.add(parada);
+			}
+			rs.close();
+			st.close();
 
-		} catch(SQLException se) {
-			se.printStackTrace();  
-		
-		} catch(Exception e) {
-			e.printStackTrace(System.err); 
+		} catch (SQLException se) {
+			se.printStackTrace();
+
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
 		} finally {
-			ConnectionManager.releaseConnection(conn); 
+			PoolConnectionManager.releaseConnection(conn);
 		}
-		
+
 		return listaParadas;
-    }
-  
-    public void anyadir(paradaBusVO parada){
-        Connection conn = null;
+	}
 
-        try {
+    // añade una parada de bus a la base de datos
+	public void anyadir(paradaBusVO parada) throws SQLException {
+		Connection conn = null;
 
-            conn = ConnectionManager.getConnection();
-            conn.getConnection();
-            PreparedStatement st = conn.PreparedStatement(insert);
-            ResultSet rs = st.executeQuery();
+		try {
 
-            st.setString(1, parada.getID());
-            st.setString(2, parada.getDireccion());
-            st.setString(3, parada.getLocalizacion());
+			conn = PoolConnectionManager.getConnection();
+			PreparedStatement st = conn.prepareStatement(insert);
+			ResultSet rs = st.executeQuery();
 
-            st.executeUpdate();
+			st.setString(1, Integer.toString(parada.getID()));
+			st.setString(2, parada.getDireccion());
+			st.setObject(3, parada.getLocalizacion());
 
-            rs.close();
-            st.close();
+			st.executeUpdate();
 
-        } catch(SQLException se) {
-            se.printStackTrace();  
-        
-        } catch(Exception e) {
-            e.printStackTrace(System.err); 
-        } finally {
-            ConnectionManager.releaseConnection(conn); 
-        }
-    }
+			rs.close();
+			st.close();
+
+		} catch (SQLException se) {
+			se.printStackTrace();
+
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+		} finally {
+			PoolConnectionManager.releaseConnection(conn);
+		}
+	}
 }
