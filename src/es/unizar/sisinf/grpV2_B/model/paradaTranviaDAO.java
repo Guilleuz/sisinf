@@ -2,7 +2,7 @@ package es.unizar.sisinf.grpV2_B.model;
 
 public class paradaTranviaDAO {
   
-  private static String insertar = "INSERT INTO TramStation id, name, way, direction, localitation VALUES(?,?,?,?,?)";
+  private static String insertar = "INSERT INTO TramStation (id, name, way, direction, localitation VALUES(?,?,?,?,?))";
   private static String lista = "SELECT * FROM TramStation ORDER BY id ASC";
   private static String listaSentidos = "SELECT way FROM TramStation";
   private static String listaOrdenada = "SELECT * FROM TramStation WHERE way = ?"
