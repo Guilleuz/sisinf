@@ -55,7 +55,12 @@ public class biziDAO {
             PreparedStatement addEst = conn.PreparedStatement(insertar);
             ResultSet rs = lsEst.executeQuery();
 
-            addEst.setString(5, estacion.getID(), estacion.getCapacidad(), estacion.getBicis(), estacion.getDireccion(), estacion.getLocalizacion());
+            addEst.setString(1, estacion.getID());
+	    addEst.setString(2, estacion.getCapacidad());
+	    addEst.setString(3, estacion.getBicis());
+	    addEst.setString(4, estacion.getDireccion());
+	    addEst.setString(5, estacion.getLocalizacion());
+		
             addEst.executeUpdate();
 
             rs.close();
