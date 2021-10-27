@@ -46,6 +46,7 @@ public class paradaTranviaDAO {
 	try {
 		conn = ConnectionManager.getConnection();
             	conn.getConnection();
+		((org.postgresql.PGConnection)conn).addDataType("geometry",Class.forName("org.postgis.PGgeometry"));
             	PreparedStatement lsParadas = conn.PreparedStatement(lista);
 
             	ResultSet rs = lsParadas.executeQuery();
@@ -55,7 +56,7 @@ public class paradaTranviaDAO {
                                                     ,rs.getString("name")
                                                     ,rs.getString("way")
                                                     ,rs.getString("direction")
-                                                    ,rs.getString("localitation"));
+                                                    ,(PGgeometry)rs.getObject("localitation"));
                 	listaParadas.add(parada);
 		    }
             	rs.close();
@@ -79,14 +80,14 @@ public class paradaTranviaDAO {
 
 	try {
 		conn = ConnectionManager.getConnection();
-            	conn.getConnection();
-            	PreparedStatement lsSentidos = conn.PreparedStatement(listaSentidos);
+		conn.getConnection();
+		PreparedStatement lsSentidos = conn.PreparedStatement(listaSentidos);
 
-            	ResultSet rs = lsParadas.executeQuery();
+		ResultSet rs = lsParadas.executeQuery();
 
-            	while(rs.next()){
-                String lS = rs.getString("way");
-                listaSentidos.add(lS);
+		while(rs.next()){
+		String lS = rs.getString("way");
+		listaSentidos.add(lS);
         }
             rs.close();
             lsSentidos.close();
