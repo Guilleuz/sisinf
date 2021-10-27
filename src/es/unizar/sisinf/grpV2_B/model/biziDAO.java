@@ -52,14 +52,14 @@ public class biziDAO {
         try {
             conn = ConnectionManager.getConnection();
             conn.getConnection();
-            PreparedStatement lsEst = conn.PreparedStatement(insertar);
+            PreparedStatement addEst = conn.PreparedStatement(insertar);
             ResultSet rs = lsEst.executeQuery();
 
-            lsEst.setString(3, estacion.getID(), estacion.getCapacidad(), estacion.getBicis(), estacion.getDireccion(), estacion.getLocalizacion());
-            lsEst.executeUpdate();
+            addEst.setString(5, estacion.getID(), estacion.getCapacidad(), estacion.getBicis(), estacion.getDireccion(), estacion.getLocalizacion());
+            addEst.executeUpdate();
 
             rs.close();
-            lsEst.close();
+            addEst.close();
 
         } catch(SQLException se) {
             se.printStackTrace();  
