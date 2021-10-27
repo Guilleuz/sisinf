@@ -150,7 +150,11 @@ public class paradaTranviaDAO {
             PreparedStatement addParada = conn.PreparedStatement(insertar);
             ResultSet rs = st.executeQuery();
 
-            addParada.setString(3, parada.getID(), parada.getNombre(), parada.getSentido(), parada.getDireccion(), parada.getLocalizacion());
+            addParada.setString(1, parada.getID());
+	    addParada.setString(2, parada.getNombre());
+	    addParada.setString(3, parada.getSentido());
+            addParada.setString(4, parada.getDireccion());
+	    addParada.setString(5, parada.getLocalizacion());
             addParada.executeUpdate();
 
             rs.close();
