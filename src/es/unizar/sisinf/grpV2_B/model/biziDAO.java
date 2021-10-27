@@ -8,7 +8,7 @@ import es.unizar.sisinf.grpV2_B.db.*;
 
 public class biziDAO {
 	
-    private static String insertar = "INSERT INTO BiziStation id, capacity, available, direction, localitation VALUES(?,?,?,?,?)";
+    private static String insertar = "INSERT INTO BiziStation (id, capacity, available, direction, localitation VALUES(?,?,?,?,?))";
     private static String lsEstaciones = "SELECT * FROM BiziStation ORDER BY id ASC";
     
     public List<biziVO> listar(){
