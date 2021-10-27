@@ -1,10 +1,9 @@
 package es.unizar.sisinf.grpV2_B.model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
+import java.lang.*;
+import org.postgis.*;
 
 import es.unizar.sisinf.grpV2_B.db.ConnectionManager;
 
@@ -90,7 +89,8 @@ public class lineaBusDAO{
             conn = ConnectionManager.getConnection();
             conn.getConnection();
             PreparedStatement st = conn.PreparedStatement(findByNameAndWay);
-            st.setString(2,nombre,sentido);
+            st.setString(1,nombre,sentido);
+            st.setString(2,sentido);
             ResultSet rs = st.executeQuery();
             linea = new lineaBusVO(rs.getInt("id"),rs.getString("name"),rs.getString("way"));
             rs.close();
@@ -144,7 +144,10 @@ public class lineaBusDAO{
             conn = ConnectionManager.getConnection();
             conn.getConnection();
             PreparedStatement st = conn.PreparedStatement(insert);
-            st.setString(3, linea.getID(), linea.getNombre(), linea.getSentido());
+            st.setString(1, linea.getID());
+            st.setString(2, linea.getNombre());
+            st.setString(3, linea.getSentido());
+
             st.executeUpdate();
 
             st.close();
