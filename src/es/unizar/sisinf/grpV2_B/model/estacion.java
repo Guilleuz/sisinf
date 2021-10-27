@@ -26,6 +26,11 @@ public class estacion {
         return localizacion;
     }
     // Métodos set
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
