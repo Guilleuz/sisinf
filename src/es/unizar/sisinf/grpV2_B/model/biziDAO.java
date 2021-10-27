@@ -8,42 +8,42 @@ import es.unizar.sisinf.grpV2_B.db.*;
 
 public class biziDAO {
 	
-    private static String insertar = "INSERT INTO BiziStation (id, capacity, available, direction, localitation VALUES(?,?,?,?,?))";
+    private static String insertar = "INSERT INTO BiziStation (id, capacity, available, direction, localitation) VALUES(?,?,?,?,?)";
     private static String lsEstaciones = "SELECT * FROM BiziStation ORDER BY id ASC";
     
     public List<biziVO> listar(){
 
-		List<biziVO> listaEstaciones = new LinkedList<biziVO>();
+	List<biziVO> listaEstaciones = new LinkedList<biziVO>();
         Connection conn = null;
 
-		try {
-			conn = ConnectionManager.getConnection();
-            conn.getConnection();
-            PreparedStatement lsEst = conn.PreparedStatement(lsEstaciones);
+	try {
+		conn = ConnectionManager.getConnection();
+           	conn.getConnection();
+            	PreparedStatement lsEst = conn.PreparedStatement(lsEstaciones);
 
-            ResultSet rs = lsEst.executeQuery();
+            	ResultSet rs = lsEst.executeQuery();
 
-            while(rs.next()){
-                biziVO estacion = new biziVO(rs.getInt("id")
+            	while(rs.next()){
+                	biziVO estacion = new biziVO(rs.getInt("id")
                                                     ,rs.getInt("capacity")
                                                     ,rs.getInt("available")
                                                     ,rs.getString("direction")
                                                     ,rs.getString("localitation")); // es localization :D
-                listaParadas.add(parada);
-            }
-            rs.close();
-            lsEst.close();
+                	listaParadas.add(parada);
+	}
+    	rs.close();
+    	lsEst.close();
 
-		} catch(SQLException se) {
-			se.printStackTrace();  
-		
-		} catch(Exception e) {
-			e.printStackTrace(System.err); 
-		} finally {
-			ConnectionManager.releaseConnection(conn); 
-		}
-		
-		return listaEstaciones;
+	} catch(SQLException se) {
+		se.printStackTrace();  
+
+	} catch(Exception e) {
+		e.printStackTrace(System.err); 
+	} finally {
+		ConnectionManager.releaseConnection(conn); 
+	}
+
+	return listaEstaciones;
     }
     
     public void anyadir(biziVO estacion){
