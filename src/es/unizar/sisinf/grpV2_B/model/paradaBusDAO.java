@@ -1,10 +1,9 @@
 package es.unizar.sisinf.grpV2_B.model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
+import java.lang.*;
+import org.postgis.*;
 
 import es.unizar.sisinf.grpV2_B.db.ConnectionManager;
 
@@ -24,6 +23,7 @@ public class paradaBusDAO{
 
 			conn = ConnectionManager.getConnection();
             conn.getConnection();
+            ((org.postgresql.PGConnection)conn).addDataType("geometry",Class.forName("org.postgis.PGgeometry"));
             PreparedStatement st = conn.PreparedStatement(findById);
 
             st.setString(1,id);
@@ -31,7 +31,7 @@ public class paradaBusDAO{
 
             parada = new paradaBusVO(rs.getInt("id")
                                                 ,rs.getString("direction")
-                                                ,rs.get("localitation")); //duda geoometry type?
+                                                ,(PGgeometry)rs.getObject(3)); 
             rs.close();
             st.close();
 
@@ -57,6 +57,7 @@ public class paradaBusDAO{
 		try {
 			conn = ConnectionManager.getConnection();
             conn.getConnection();
+            ((org.postgresql.PGConnection)conn).addDataType("geometry",Class.forName("org.postgis.PGgeometry"));
             PreparedStatement st = conn.PreparedStatement(list);
 
             ResultSet rs = st.executeQuery();
@@ -64,7 +65,7 @@ public class paradaBusDAO{
             while(rs.next()){
                 paradaBusVO parada = new paradaBusVO(rs.getInt("id")
                                                     ,rs.getString("direction")
-                                                    ,rs.get("localitation"));//duda geoometry type?
+                                                    ,(PGgeometry)rs.getObject(3));
                 listaParadas.add(parada);
             }
             rs.close();
@@ -92,7 +93,10 @@ public class paradaBusDAO{
             PreparedStatement st = conn.PreparedStatement(insert);
             ResultSet rs = st.executeQuery();
 
-            st.setString(3, parada.getID(), parada.getDireccion(), parada.getLocalizacion());
+            st.setString(1, parada.getID());
+            st.setString(2, parada.getDireccion());
+            st.setString(3, parada.getLocalizacion());
+
             st.executeUpdate();
 
             rs.close();

@@ -1,20 +1,19 @@
 package es.unizar.sisinf.grpV2_B.model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
+import java.lang.*;
+import org.postgis.*;
 
 import es.unizar.sisinf.grpV2_B.db.ConnectionManager;
 
 public class lineaBusDAO{
     
-    private static String insert = "INSERT INTO BusLine(id, name, way VALUES(?,?,?)";
+    private static String insert = "INSERT INTO BusLine(id, name, way) VALUES(?,?,?)";
 	private static String findByNameAndWay = "SELECT * FROM BusLine WHERE name=? AND way=?";
     private static String findById = "SELECT * FROM BusLine WHERE id=?";
     private static String list = "SELECT * FROM BusLine";
-    private static String listWays = "SELECT * FROM BusLine WHERE=?";
+    private static String listWays = "SELECT way FROM BusLine WHERE name=?";
     
     public List<String> obtenerListado(){
         List<lineaBusVO> listaLineas = new LinkedList<lineaBusVO>();
@@ -49,7 +48,7 @@ public class lineaBusDAO{
     }
     
     public List<String> obtenerSentidos(String nombre){
-        List<lineaBusVO> listaLineas = new LinkedList<lineaBusVO>();
+        List<String> lista = new LinkedList<String>();
         Connection conn = null;
 
 		try {
@@ -59,11 +58,8 @@ public class lineaBusDAO{
             st.setString(1,nombre);
             ResultSet rs = st.executeQuery();
 
-            while(rs.next()){
-                lineaBusVO linea = new lineaBusVO(rs.getInt("id")
-                                                    ,rs.getString("name")
-                                                    ,rs.getString("way"));
-                listaLineas.add(linea);
+            while(rs.next()) {
+		lista.add(rs.getString("way"));
             }
             rs.close();
             st.close();
@@ -77,7 +73,7 @@ public class lineaBusDAO{
 			ConnectionManager.releaseConnection(conn); 
 		}
 		
-		return listaLineas;
+		return lista;
        
     
     }
@@ -90,7 +86,8 @@ public class lineaBusDAO{
             conn = ConnectionManager.getConnection();
             conn.getConnection();
             PreparedStatement st = conn.PreparedStatement(findByNameAndWay);
-            st.setString(2,nombre,sentido);
+            st.setString(1,nombre,sentido);
+            st.setString(2,sentido);
             ResultSet rs = st.executeQuery();
             linea = new lineaBusVO(rs.getInt("id"),rs.getString("name"),rs.getString("way"));
             rs.close();
@@ -144,7 +141,10 @@ public class lineaBusDAO{
             conn = ConnectionManager.getConnection();
             conn.getConnection();
             PreparedStatement st = conn.PreparedStatement(insert);
-            st.setString(3, linea.getID(), linea.getNombre(), linea.getSentido());
+            st.setString(1, linea.getID());
+            st.setString(2, linea.getNombre());
+            st.setString(3, linea.getSentido());
+
             st.executeUpdate();
 
             st.close();
