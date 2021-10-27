@@ -7,7 +7,8 @@ import java.sql.SQLException;
 import es.unizar.sisinf.grpV2_B.db.*;
 
 public class biziDAO {
-
+	
+    private static String insertar = "INSERT INTO BiziStation(id, capacity, available, direction, localitation VALUES(?,?,?,?,?)";
     private static String lsEstaciones = "SELECT * FROM BiziStation ORDER BY id ASC";
     
     public List<biziVO> listar(){
@@ -51,7 +52,7 @@ public class biziDAO {
         try {
             conn = ConnectionManager.getConnection();
             conn.getConnection();
-            PreparedStatement lsEst = conn.PreparedStatement(insert);
+            PreparedStatement lsEst = conn.PreparedStatement(insertar);
             ResultSet rs = lsEst.executeQuery();
 
             lsEst.setString(3, estacion.getID(), estacion.getCapacidad(), estacion.getBicis(), estacion.getDireccion(), estacion.getLocalizacion());
