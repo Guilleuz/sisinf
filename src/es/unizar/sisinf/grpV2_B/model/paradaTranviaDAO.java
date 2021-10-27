@@ -89,55 +89,55 @@ public class paradaTranviaDAO {
 		String lS = rs.getString("way");
 		listaSentidos.add(lS);
         }
-            rs.close();
-            lsSentidos.close();
+    	rs.close();
+    	lsSentidos.close();
 
-		} catch(SQLException se) {
-			se.printStackTrace();  
-		
-		} catch(Exception e) {
-			e.printStackTrace(System.err); 
-		} finally {
-			ConnectionManager.releaseConnection(conn); 
-		}
-		
-		return listaSentidos;
+	} catch(SQLException se) {
+		se.printStackTrace();  
+
+	} catch(Exception e) {
+		e.printStackTrace(System.err); 
+	} finally {
+		ConnectionManager.releaseConnection(conn); 
+	}
+
+	return listaSentidos;
    
   }
   
   public List<paradaTranviaVO> listar(){
 
-		List<paradaTranviaVO> listaParadas = new LinkedList<paradaTranviaVO>();
+	List<paradaTranviaVO> listaParadas = new LinkedList<paradaTranviaVO>();
         Connection conn = null;
 
-		try {
-			conn = ConnectionManager.getConnection();
-            conn.getConnection();
-            PreparedStatement lsParadas = conn.PreparedStatement(lista);
+	try {
+		conn = ConnectionManager.getConnection();
+            	conn.getConnection();
+            	PreparedStatement lsParadas = conn.PreparedStatement(lista);
 
-            ResultSet rs = lsParadas.executeQuery();
+            	ResultSet rs = lsParadas.executeQuery();
 
-            while(rs.next()){
-                paradaTranviaVO parada = new paradaTranviaVO(rs.getInt("id")
+           	while(rs.next()){
+                	paradaTranviaVO parada = new paradaTranviaVO(rs.getInt("id")
                                                     ,rs.getString("name")
                                                     ,rs.getString("way")
                                                     ,rs.getString("direction")
                                                     ,rs.getString("localitation"));
-                listaParadas.add(parada);
-            }
-            rs.close();
-            lsParadas.close();
+                	listaParadas.add(parada);
+	}
+    	rs.close();
+    	lsParadas.close();
 
-		} catch(SQLException se) {
-			se.printStackTrace();  
-		
-		} catch(Exception e) {
-			e.printStackTrace(System.err); 
-		} finally {
-			ConnectionManager.releaseConnection(conn); 
-		}
-		
-		return listaParadas;
+	} catch(SQLException se) {
+		se.printStackTrace();  
+
+	} catch(Exception e) {
+		e.printStackTrace(System.err); 
+	} finally {
+		ConnectionManager.releaseConnection(conn); 
+	}
+
+	return listaParadas;
  }
   
   
