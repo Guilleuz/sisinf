@@ -8,9 +8,9 @@ import java.sql.SQLException;
 import es.unizar.sisinf.grp1.db.ConnectionManager;
 
 public class UserFacade {
-     private static String countByUserName = "SELECT count(*) cuenta FROM users WHERE username = ?";
-     private static String findByUserName = "SELECT * FROM users WHERE username = ?";
-     private static String updateDate = "UPDATE users set last_login = current_timestamp where username = ?";
+     private static String countByUserName = "SELECT count(*) cuenta FROM Usuario WHERE name = ?";
+     private static String findByUserName = "SELECT * FROM Usuario WHERE name = ?";
+     private static String updateDate = "UPDATE users set last_login = current_timestamp where name = ?";
     
      public boolean validateUser(UserVO user) {
      boolean result = false;
@@ -22,9 +22,9 @@ public class UserFacade {
          PreparedStatement countPs = conn.prepareStatement(countByUserName);
          PreparedStatement findPs = conn.prepareStatement(findByUserName);
          PreparedStatement updatePs = conn.prepareStatement(updateDate);
-         countPs.setString(1, user.getUserName());
-         findPs.setString(1, user.getUserName());
-         updatePs.setString(1, user.getUserName());
+         countPs.setString(1, user.getNombreUsuario());
+         findPs.setString(1, user.getNombreUsuario());
+         updatePs.setString(1, user.getNombreUsuario());
          
          // Ejecutamos la consulta
          ResultSet findRs = findPs.executeQuery();
