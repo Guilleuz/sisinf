@@ -8,9 +8,34 @@ public class paradaTranviaDAO {
   private static String listaOrdenada = "SELECT * FROM TramStation WHERE way = ?"
   private static String idParada = "SELECT id FROM TramStation WHERE name = ? AND way = ?";
   
-  public int idP() {
-  
-  
+  public int idP(String nombre, String sentido) {
+  	int identificador = null;
+	Connection conn = null;
+	try {
+
+		conn = ConnectionManager.getConnection();
+	    	conn.getConnection();
+	   	PreparedStatement st = conn.PreparedStatement(idParada);
+
+	    	st.setString(1,nombre);
+		st.setString(2,sentido);
+	    	ResultSet rs = st.executeQuery();
+
+	    	identificador = rs.getString("id");
+	    	rs.close();
+	    	st.close();
+
+	} catch(SQLException se) {
+		se.printStackTrace();  
+
+	} catch(Exception e) {
+		e.printStackTrace(System.err); 
+	} finally {
+		ConnectionManager.releaseConnection(conn); 
+	}
+
+	return identificador;
+
   }
   
   public List<paradaTranviaVO> listarOrdenada(){
