@@ -9,4 +9,15 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
+  <!-- Listado de servlets -->
+  <servlet>
+    <display-name>Menú Bizi</display-name>
+    <servlet-name>menuBizi</servlet-name>
+    <servlet-class>es.unizar.sisinf.grpV2_B.servlet.servletMenuBizi</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>menuBizi</servlet-name>
+    <url-pattern>/menuBizi</url-pattern>
+  </servlet-mapping>
 </web-app>
