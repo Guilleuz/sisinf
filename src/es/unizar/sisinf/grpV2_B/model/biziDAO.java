@@ -54,6 +54,19 @@ public class biziDAO {
 		return listaEstaciones;
 	}
 
+	public biziVO infoBizi(int id) {
+		List<biziVO> listaEstaciones = listar();
+		biziVO estacion;
+		for(biziVO i : listaEstaciones){ 	
+			if (i.getID() == id) {
+				estacion = i;
+				estacion.setBicis(getNumeroBicis(id));
+				return estacion;
+			}
+		}
+		
+	}
+
 	// añade una estacion bizi a la base de datos
 	public void anyadir(biziVO estacion) throws SQLException {
 		Connection conn = null;
