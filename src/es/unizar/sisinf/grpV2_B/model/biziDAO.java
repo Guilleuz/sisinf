@@ -19,6 +19,8 @@ public class biziDAO {
 
 	private static String insertar = "INSERT INTO BiziStation (id, capacity, available, direction, localitation) VALUES(?,?,?,?,?)";
 	private static String lsEstaciones = "SELECT * FROM BiziStation ORDER BY id ASC";
+	private static String info = "SELECT * FROM BiziStation WHERE id=?";
+
 
 	// devuelve una lista de las estaciones bizi
 	public List<biziVO> listar() throws SQLException {
@@ -53,18 +55,35 @@ public class biziDAO {
 
 		return listaEstaciones;
 	}
+	public biziVO infoBizi(int id) throws SQLException {
 
-	public biziVO infoBizi(int id) {
-		List<biziVO> listaEstaciones = listar();
-		biziVO estacion;
-		for(biziVO i : listaEstaciones){ 	
-			if (i.getID() == id) {
-				estacion = i;
-				estacion.setBicis(getNumeroBicis(id));
-				return estacion;
-			}
+		Connection conn = null;
+
+		try {
+			conn = PoolConnectionManager.getConnection();
+			
+			PreparedStatement lsEst = conn.prepareStatement(info);
+			((org.postgresql.PGConnection)conn).addDataType("geometry", (Class<? extends PGobject>) Class.forName("org.postgis.PGgeometry"));
+			lsEst.setString(1, id);
+			ResultSet rs = lsEst.executeQuery();
+
+			biziVO estacion = new biziVO(rs.getInt("id"), rs.getInt("capacity"), 0, 
+								  rs.getString("direction"), (PGgeometry) rs.getObject("localization"));
+
+			estacion.setBicis(getNumeroBicis(id));
+			rs.close();
+			lsEst.close();
+
+		} catch (SQLException se) {
+			se.printStackTrace();
+
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+		} finally {
+			PoolConnectionManager.releaseConnection(conn);
 		}
-		
+
+		return estacion;
 	}
 
 	// añade una estacion bizi a la base de datos

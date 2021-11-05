@@ -20,7 +20,13 @@ public class datosEstacion extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = request.getParameter("id");
         biziDAO bizi = new biziDAO();
+        
+        try{
         biziVO estacion = bizi.infoBizi(id);
+        }
+        catch (SQLException e){
+		se.printStackTrace();
+        }
         
         request.setAttribute("estacion", estacion);
         request.getRequestDispatcher("mostrarDatos.jsp").forward(request, response);   
