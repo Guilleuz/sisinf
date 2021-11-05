@@ -14,10 +14,20 @@
   <servlet>
     <display-name>Menú Bizi</display-name>
     <servlet-name>menuBizi</servlet-name>
-    <servlet-class>es.unizar.sisinf.grpV2_B.servlet.servletMenuBizi</servlet-class>
+    <servlet-class>es.unizar.sisinf.grpV2_B.servlet.Bizi.servletMenuBizi</servlet-class>
   </servlet>
+  <!--
+  <servlet>
+    <display-name>Estación Bizi</display-name>
+    <servlet-name>estacionBizi</servlet-name>
+    <servlet-class>es.unizar.sisinf.grpV2_B.servlet.Bizi.datosEstacion</servlet-class>
+  </servlet>
+  -->
   <servlet-mapping>
     <servlet-name>menuBizi</servlet-name>
     <url-pattern>/menuBizi</url-pattern>
+    <!--
+    <servlet-name>estacionBizi</servlet-name>
+    <url-pattern>/estacionBizi</url-pattern> -->
   </servlet-mapping>
 </web-app>
