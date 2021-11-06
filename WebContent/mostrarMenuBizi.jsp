@@ -9,7 +9,7 @@
 <title>Lista Estaciones Bizis</title>
 </head>
 <body>
-    <form action="/estacionBizi" method="get">
+    <form action="/sisinf/estacionBizi" method="get">
         <select name="id">
             <c:forEach items="${lista}" var="Estacion">
             <c:set var="ID" value="${Estacion.getID()}"/>

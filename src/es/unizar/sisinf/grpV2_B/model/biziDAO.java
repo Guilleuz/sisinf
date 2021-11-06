@@ -1,26 +1,39 @@
 package es.unizar.sisinf.grpV2_B.model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import es.unizar.sisinf.grpV2_B.db.*;
 import org.json.*;
-import org.postgis.PGgeometry;
+import org.postgis.*;
 import org.postgresql.util.PGobject;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class biziDAO {
 
-	private static String insertar = "INSERT INTO BiziStation (id, capacity, available, direction, localitation) VALUES(?,?,?,?,?)";
-	private static String lsEstaciones = "SELECT * FROM BiziStation ORDER BY id ASC";
-	private static String info = "SELECT * FROM BiziStation WHERE id=?";
+	private static String insertar = "INSERT INTO BiziStation (id, capacity, available, direction, localization) VALUES(?,?,?,?,?)";
+	private static String lsEstaciones = "SELECT id, capacity, available, direction, localization::text FROM BiziStation ORDER BY id ASC";
+	private static String info = "SELECT id, capacity, available, direction, localization::text FROM BiziStation WHERE id=?";
+	// ST_AsText(your_geom_column)
+	// geom::text
+	
+	
+	//SELECT ST_X(the_geom), ST_Y(the_geom), ST_AsText(the_geom) FROM myTable;
+	// -> 0 , 03223, POINT((0,03223))
+	
+	// // geom::text -> WKT: 3238399FA12349
 
+	// INSERT ST_GeomFromText(?)
+	//3238399FA12349 -> POINT ((0,03223))
+	
+	//ST_AsEWKT(localization);
+
+	
+
+	//SELECT * ST_AsText(the_geom) FROM table2;
 
 	// devuelve una lista de las estaciones bizi
 	public List<biziVO> listar() throws SQLException {
@@ -31,14 +44,20 @@ public class biziDAO {
 		try {
 			conn = PoolConnectionManager.getConnection();
 			
+			//((org.postgresql.PGConnection)conn).addDataType("geometry",Class.forName("org.postgis.PGgeometry"));
 			PreparedStatement lsEst = conn.prepareStatement(lsEstaciones);
-			((org.postgresql.PGConnection)conn).addDataType("geometry", (Class<? extends PGobject>) Class.forName("org.postgis.PGgeometry"));
-
+			//((org.postgresql.PGConnection)conn).addDataType("geometry", (Class<? extends PGobject>) Class.forName("org.postgis.PGgeometry"));
+			
 			ResultSet rs = lsEst.executeQuery();
 
+
 			while (rs.next()) {
+				String localization  = rs.getString("localization");
+				System.out.println("Punto: " + localization);
+				
+				//geom.toString())
 				biziVO estacion = new biziVO(rs.getInt("id"), rs.getInt("capacity"), rs.getInt("available"), 
-								  rs.getString("direction"), (PGgeometry) rs.getObject("localization"));
+								  rs.getString("direction"), new PGgeometry(localization));
 				listaEstaciones.add(estacion);
 			}
 			rs.close();
@@ -55,22 +74,24 @@ public class biziDAO {
 
 		return listaEstaciones;
 	}
+	
 	public biziVO infoBizi(int id) throws SQLException {
 
 		Connection conn = null;
+		biziVO estacion = null;
 
 		try {
 			conn = PoolConnectionManager.getConnection();
 			
 			PreparedStatement lsEst = conn.prepareStatement(info);
-			((org.postgresql.PGConnection)conn).addDataType("geometry", (Class<? extends PGobject>) Class.forName("org.postgis.PGgeometry"));
-			lsEst.setString(1, id);
+			lsEst.setInt(1, id);
 			ResultSet rs = lsEst.executeQuery();
-
-			biziVO estacion = new biziVO(rs.getInt("id"), rs.getInt("capacity"), 0, 
-								  rs.getString("direction"), (PGgeometry) rs.getObject("localization"));
+			rs.next();
+			estacion = new biziVO(rs.getInt("id"), rs.getInt("capacity"), 0, 
+								  rs.getString("direction"), new PGgeometry(rs.getString("localization")));
 
 			estacion.setBicis(getNumeroBicis(id));
+			System.out.println(estacion.getID() + " " + estacion.getDireccion() + " " + estacion.getBicis());
 			rs.close();
 			lsEst.close();
 
@@ -82,7 +103,6 @@ public class biziDAO {
 		} finally {
 			PoolConnectionManager.releaseConnection(conn);
 		}
-
 		return estacion;
 	}
 
@@ -94,13 +114,14 @@ public class biziDAO {
 			conn = PoolConnectionManager.getConnection();
 			
 			PreparedStatement addEst = conn.prepareStatement(insertar);
-			ResultSet rs = addEst.executeQuery();
 
 			addEst.setString(1, Integer.toString(estacion.getID()));
 			addEst.setString(2, Integer.toString(estacion.getCapacidad()));
 			addEst.setString(3, Integer.toString(estacion.getBicis()));
 			addEst.setString(4, estacion.getDireccion());
 			addEst.setObject(5, estacion.getLocalizacion()); // Añadir tipo geometry
+
+			ResultSet rs = addEst.executeQuery();
 
 			addEst.executeUpdate();
 

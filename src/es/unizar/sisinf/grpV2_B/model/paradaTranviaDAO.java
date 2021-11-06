@@ -9,7 +9,7 @@ import es.unizar.sisinf.grpV2_B.db.PoolConnectionManager;
 
 public class paradaTranviaDAO {
 
-	private static String insertar = "INSERT INTO TramStation (id, name, way, direction, localitation VALUES(?,?,?,?,?))";
+	private static String insertar = "INSERT INTO TramStation (id, name, way, direction, localization VALUES(?,?,?,?,?))";
 	private static String lista = "SELECT * FROM TramStation ORDER BY id ASC";
 	private static String listaSentidos = "SELECT way FROM TramStation";
 	private static String listaOrdenada = "SELECT * FROM TramStation WHERE way = ? ORDER BY orden";
@@ -60,7 +60,7 @@ public class paradaTranviaDAO {
 
 			while (rs.next()) {
 				paradaTranviaVO parada = new paradaTranviaVO(rs.getInt("id"), rs.getString("name"), rs.getString("way"), rs.getInt("orden"),
-						rs.getString("direction"), (PGgeometry) rs.getObject("localitation"));
+						rs.getString("direction"), (PGgeometry) rs.getObject("localization"));
 				listaParadas.add(parada);
 			}
 			rs.close();
@@ -125,7 +125,7 @@ public class paradaTranviaDAO {
 
 			while (rs.next()) {
 				paradaTranviaVO parada = new paradaTranviaVO(rs.getInt("id"), rs.getString("name"), rs.getString("way"), rs.getInt("orden"),
-						rs.getString("direction"), (PGgeometry) rs.getObject("localitation"));
+						rs.getString("direction"), (PGgeometry) rs.getObject("localization"));
 				listaParadas.add(parada);
 			}
 			rs.close();

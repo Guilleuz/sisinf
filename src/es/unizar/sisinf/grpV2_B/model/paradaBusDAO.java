@@ -11,7 +11,7 @@ import es.unizar.sisinf.grpV2_B.db.PoolConnectionManager;
 
 public class paradaBusDAO {
 
-	private static String insert = "INSERT INTO BusStation(id,direction,localitation VALUES(?,?,?)";
+	private static String insert = "INSERT INTO BusStation(id,direction,localization VALUES(?,?,?)";
 	private static String findById = "SELECT * FROM BusStation WHERE id=?";
 	private static String list = "SELECT * FROM BusStation";
 

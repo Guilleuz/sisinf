@@ -17,14 +17,21 @@ public class datosEstacion extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id = Integer.valueOf(request.getParameter("id"));
+        int id = 0;
+    	try {
+        	id = Integer.valueOf(request.getParameter("id"));
+        }
+        catch (NumberFormatException ex){
+            ex.printStackTrace();
+        }
         biziDAO bizi = new biziDAO();
+        biziVO estacion = null;
         
         try{
-        biziVO estacion = bizi.infoBizi(id);
+        	estacion = bizi.infoBizi(id);
         }
         catch (SQLException e){
-		se.printStackTrace();
+        	e.printStackTrace();
         }
         
         request.setAttribute("estacion", estacion);
