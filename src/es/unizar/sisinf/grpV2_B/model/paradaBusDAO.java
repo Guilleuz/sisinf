@@ -25,7 +25,7 @@ public class paradaBusDAO {
 
 			conn = PoolConnectionManager.getConnection();
 			PreparedStatement st = conn.prepareStatement(findById);
-			st.setString(1, Integer.toString(id));
+			st.setInt(1, id);
 			ResultSet rs = st.executeQuery();
 			rs.next();
 			parada = new paradaBusVO(rs.getInt("id"), rs.getString("direction"), new PGgeometry(rs.getString("localization")));

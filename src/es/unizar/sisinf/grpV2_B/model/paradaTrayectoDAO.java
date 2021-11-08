@@ -12,7 +12,7 @@ import es.unizar.sisinf.grpV2_B.db.PoolConnectionManager;
 public class paradaTrayectoDAO {
 
 	private static String insertar = "INSERT INTO BusRoute (busStop, line, orden) VALUES(?,?,?)";
-	private static String lista = "SELECT * FROM BusRoute WHERE id=? ORDER BY orden ASC";
+	private static String lista = "SELECT * FROM BusRoute WHERE line=? ORDER BY orden ASC";
 
 	// Obtener un listado de todas las paradas a partir de un id de linea
 	// (ordenadas)
@@ -24,7 +24,7 @@ public class paradaTrayectoDAO {
 			conn = PoolConnectionManager.getConnection();
 
 			PreparedStatement lsParadas = conn.prepareStatement(lista);
-			lsParadas.setString(1, Integer.toString(id));
+			lsParadas.setInt(1, id);
 			ResultSet rs = lsParadas.executeQuery();
 
 			while (rs.next()) {

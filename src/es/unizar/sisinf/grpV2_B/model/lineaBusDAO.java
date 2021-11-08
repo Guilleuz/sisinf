@@ -86,6 +86,7 @@ public class lineaBusDAO {
 			st.setString(1, nombre);
 			st.setString(2, sentido);
 			ResultSet rs = st.executeQuery();
+			rs.next();
 			linea = new lineaBusVO(rs.getInt("id"), rs.getString("name"), rs.getString("way"));
 			rs.close();
 			st.close();

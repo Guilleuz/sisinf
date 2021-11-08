@@ -38,7 +38,7 @@ public class servletListaParadas extends HttpServlet {
 		}
 		
 		request.setAttribute("paradas", paradasBus);
-        request.getRequestDispatcher("mostrarParadaBus.jsp").forward(request, response);
+        request.getRequestDispatcher("mostrarParadasBus.jsp").forward(request, response);
     }
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
