@@ -11,6 +11,7 @@
   </welcome-file-list>
   
   <!-- Listado de servlets -->
+  <!-- Servlets Bizi -->
   <servlet>
     <display-name>Menú Bizi</display-name>
     <servlet-name>menuBizi</servlet-name>
@@ -23,6 +24,39 @@
     <servlet-class>es.unizar.sisinf.grpV2_B.servlet.Bizi.datosEstacion</servlet-class>
   </servlet>
   
+  <!-- Servlets Tranvia -->
+   <servlet>
+    <display-name>Menú Tranvía</display-name>
+    <servlet-name>menuTranvia</servlet-name>
+    <servlet-class>es.unizar.sisinf.grpV2_B.servlet.Tranvia.servletMenuTranvia</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <display-name>Parada Tranvía</display-name>
+    <servlet-name>paradaTranvia</servlet-name>
+    <servlet-class>es.unizar.sisinf.grpV2_B.servlet.Tranvia.servletParadaTranvia</servlet-class>
+  </servlet>
+  
+  <!-- Servlets Bus -->
+  <servlet>
+    <display-name>Menú Bus</display-name>
+    <servlet-name>menuBus</servlet-name>
+    <servlet-class>es.unizar.sisinf.grpV2_B.servlet.Bus.servletMenuBus</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <display-name>Listar Paradas</display-name>
+    <servlet-name>listarParadasBus</servlet-name>
+    <servlet-class>es.unizar.sisinf.grpV2_B.servlet.Bus.servletListaParadas</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <display-name>Parada Autobús</display-name>
+    <servlet-name>paradaAutobus</servlet-name>
+    <servlet-class>es.unizar.sisinf.grpV2_B.servlet.Bus.servletParadaBus</servlet-class>
+  </servlet>
+  
+  <!-- Mapping Bizi -->
   <servlet-mapping>
     <servlet-name>menuBizi</servlet-name>
     <url-pattern>/menuBizi</url-pattern>
@@ -31,5 +65,32 @@
   <servlet-mapping>
     <servlet-name>estacionBizi</servlet-name>
     <url-pattern>/estacionBizi</url-pattern> 
+  </servlet-mapping>
+  
+  <!-- Mapping Tranvía -->
+  <servlet-mapping>
+    <servlet-name>menuTranvia</servlet-name>
+    <url-pattern>/menuTranvia</url-pattern> 
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>paradaTranvia</servlet-name>
+    <url-pattern>/paradaTranvia</url-pattern> 
+  </servlet-mapping>
+  
+  <!-- Mapping Bus -->
+  <servlet-mapping>
+    <servlet-name>menuBus</servlet-name>
+    <url-pattern>/menuBus</url-pattern> 
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>listarParadasBus</servlet-name>
+    <url-pattern>/linea</url-pattern> 
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>paradaAutobus</servlet-name>
+    <url-pattern>/paradaBus</url-pattern> 
   </servlet-mapping>
 </web-app>

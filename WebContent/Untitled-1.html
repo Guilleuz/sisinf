@@ -1,0 +1,52 @@
+
+
+
+
+   
+
+</head>
+<body>
+    <form action="/sisinf/paradaTranvia" method="get">
+        <select id="seleccionarSentido">
+            <option value="none" selected disabled hidden>
+                     Seleccione Sentido
+                 </option>
+             <option value="Sentido1">Sentido Avenida</option>
+             <option value="Sentido2">Sentido valdespartera</option>
+           </select>
+           <br><br/>
+           <select id="seleccionParadaOculto">
+             <option selected="true" disabled="disabled">Seleccione Parada</option>    
+           </select>
+           
+        
+           <div id="sentido1" class="forms">
+           <select id="myselect1">
+            <option value="none" selected disabled hidden>
+                     Seleccione Parada
+                 </option>
+                 <c:forEach items="${listaSentido1}" var="parada">
+                    <c:set var="nombre" value="${parada}"/>
+                        <option value="${nombre}">${nombre}</option>
+                    </c:forEach>
+           </select> </div>
+           
+        
+           <div id="sentido2" class="forms">
+            <select id="myselect2">
+             <option value="none" selected disabled hidden>
+                      Seleccione Parada
+                  </option>
+                  <c:forEach items="${listaSentido2}" var="parada">
+                     <c:set var="nombre" value="${parada}"/>
+                         <option value="${nombre}">${nombre}</option>
+                     </c:forEach>
+            </select> </div>
+        <br/><br/>          
+        <input type="submit" value="Elegir"/>
+    </form>
+</body>
+
+
+   
+   

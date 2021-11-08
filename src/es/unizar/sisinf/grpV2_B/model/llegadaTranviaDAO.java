@@ -15,7 +15,6 @@ public class llegadaTranviaDAO {
 
 	// Dado el id de la parada, devuelve los tiempos de llegada
 	public llegadaTranviaVO getLlegadas(int parada) {
-		List<llegadaTranviaVO> lista = new ArrayList<llegadaTranviaVO>();
 
 		// Consulta a realizar a la API
 		String consultaAPI = "https://www.zaragoza.es/sede/servicio/urbanismo-infraestructuras/transporte-urbano/parada-tranvia/"

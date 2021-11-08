@@ -35,7 +35,7 @@ public class poblarBBDD {
 		for(int i = 0; i < paradas.length(); i++) {
 			parada = paradas.getJSONObject(i);
 			String id = parada.getString("id");
-			String dir = paraga.getString("title");
+			String dir = parada.getString("title");
 		}
 	}
 }

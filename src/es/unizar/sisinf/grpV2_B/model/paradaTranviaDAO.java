@@ -9,12 +9,13 @@ import es.unizar.sisinf.grpV2_B.db.PoolConnectionManager;
 
 public class paradaTranviaDAO {
 
-	private static String insertar = "INSERT INTO TramStation (id, name, way, direction, localization VALUES(?,?,?,?,?))";
+	private static String insertar = "INSERT INTO TramStation (id, name, way, orden, direction, localization) VALUES(?,?,?,?,?,?))";
 	private static String lista = "SELECT * FROM TramStation ORDER BY id ASC";
-	private static String listaSentidos = "SELECT way FROM TramStation";
-	private static String listaOrdenada = "SELECT * FROM TramStation WHERE way = ? ORDER BY orden";
+	private static String listaSentidos = "SELECT DISTINCT way FROM TramStation";
+	private static String listaOrdenada = "SELECT id, name, way, orden, direction, localization::text FROM TramStation WHERE way = ? ORDER BY orden";
 	private static String idParada = "SELECT id FROM TramStation WHERE name = ? AND way = ?";
-
+	private static String info = "SELECT id, name, orden, way, direction, localization::text FROM TramStation WHERE id = ?";
+	
 	// devuelve id de parada segun nombre y sentido
 	public int idParada(String nombre, String sentido) throws SQLException {
 		int identificador = 0;
@@ -27,7 +28,7 @@ public class paradaTranviaDAO {
 			st.setString(1, nombre);
 			st.setString(2, sentido);
 			ResultSet rs = st.executeQuery();
-
+			rs.next();
 			identificador = rs.getInt("id");
 			rs.close();
 			st.close();
@@ -53,14 +54,13 @@ public class paradaTranviaDAO {
 
 		try {
 			conn = PoolConnectionManager.getConnection();
-			((org.postgresql.PGConnection) conn).addDataType("geometry", (Class<? extends PGobject>) Class.forName("org.postgis.PGgeometry"));
 			PreparedStatement lsParadas = conn.prepareStatement(listaOrdenada);
 			lsParadas.setString(1, sentido);
 			ResultSet rs = lsParadas.executeQuery();
 
 			while (rs.next()) {
 				paradaTranviaVO parada = new paradaTranviaVO(rs.getInt("id"), rs.getString("name"), rs.getString("way"), rs.getInt("orden"),
-						rs.getString("direction"), (PGgeometry) rs.getObject("localization"));
+						rs.getString("direction"), new PGgeometry(rs.getString("localization")));
 				listaParadas.add(parada);
 			}
 			rs.close();
@@ -157,8 +157,9 @@ public class paradaTranviaDAO {
 			addParada.setString(1, Integer.toString(parada.getID()));
 			addParada.setString(2, parada.getNombre());
 			addParada.setString(3, parada.getSentido());
-			addParada.setString(4, parada.getDireccion());
-			addParada.setObject(5, parada.getLocalizacion());
+			addParada.setString(4, Integer.toString(parada.getOrden()));
+			addParada.setString(5, parada.getDireccion());
+			addParada.setObject(6, parada.getLocalizacion());
 			addParada.executeUpdate();
 
 			rs.close();
@@ -172,5 +173,32 @@ public class paradaTranviaDAO {
 		} finally {
 			PoolConnectionManager.releaseConnection(conn);
 		}
+	}
+
+	public paradaTranviaVO infoTranvia(int id) {
+		Connection conn = null;
+		paradaTranviaVO estacion = null;
+
+		try {
+			conn = PoolConnectionManager.getConnection();
+			
+			PreparedStatement lsEst = conn.prepareStatement(info);
+			lsEst.setInt(1, id);
+			ResultSet rs = lsEst.executeQuery();
+			rs.next();
+			estacion = new paradaTranviaVO(rs.getInt("id"), rs.getString("name"), rs.getString("way"), 
+								  rs.getInt("orden"), rs.getString("direction"), new PGgeometry(rs.getString("localization")));
+			rs.close();
+			lsEst.close();
+
+		} catch (SQLException se) {
+			se.printStackTrace();
+
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+		} finally {
+			PoolConnectionManager.releaseConnection(conn);
+		}
+		return estacion;
 	}
 }

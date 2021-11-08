@@ -12,7 +12,7 @@ import es.unizar.sisinf.grpV2_B.db.PoolConnectionManager;
 public class paradaBusDAO {
 
 	private static String insert = "INSERT INTO BusStation(id,direction,localization VALUES(?,?,?)";
-	private static String findById = "SELECT * FROM BusStation WHERE id=?";
+	private static String findById = "SELECT id, direction, localization::text FROM BusStation WHERE id=?";
 	private static String list = "SELECT * FROM BusStation";
 
     // devuelve una parada segun el id
@@ -24,14 +24,11 @@ public class paradaBusDAO {
 		try {
 
 			conn = PoolConnectionManager.getConnection();
-			((org.postgresql.PGConnection) conn).addDataType("geometry",
-					(Class<? extends PGobject>) Class.forName("org.postgis.PGgeometry"));
 			PreparedStatement st = conn.prepareStatement(findById);
-
 			st.setString(1, Integer.toString(id));
 			ResultSet rs = st.executeQuery();
-
-			parada = new paradaBusVO(rs.getInt("id"), rs.getString("direction"), (PGgeometry) rs.getObject(3));
+			rs.next();
+			parada = new paradaBusVO(rs.getInt("id"), rs.getString("direction"), new PGgeometry(rs.getString("localization")));
 			rs.close();
 			st.close();
 
@@ -110,4 +107,5 @@ public class paradaBusDAO {
 			PoolConnectionManager.releaseConnection(conn);
 		}
 	}
+	
 }
