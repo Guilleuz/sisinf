@@ -6,16 +6,44 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<script type="text/javascript"
+    src="jquery-ui-1.10.0/tests/jquery-1.9.0.js"></script>
+<script src="jquery-ui-1.10.0/ui/jquery-ui.js"></script>
+<script>
+$(function() {
+    $(".forms").hide();
+   $('#seleccionarLinea').on('change',function(){
+        $("#seleccionSentidoOculto").hide()
+        $("seleccionarSentido").show();
+        }
+    });
+});
+</script>
+
+
 </head>
 <body>
-	<h1>Prueba</h1>
+	<h1>Menú Bus</h1>
+
+	<% 
+	String msjError = "";
+	String poste = "";
+	if (request.getAttribute("error") != null) {
+		msjError = "<span>No existe la parada</span>";
+		poste = (String) request.getAttribute("poste");
+	}
+	%>
 	<form action="/sisinf/validarPoste" method"get">
-		<input type="text" name="id" id="campoID" placeholder="Introduzca el número de poste"/>
+		<input type="text" name="id" id="campoID" value="<%= poste%>" placeholder="Introduzca el número de poste"/>
 		<input type="submit" value="Buscar">
 	</form>
+	<%= msjError%>
+
+
 	<form action="/sisinf/linea" method="get">
 
-      <select id="myselect1" name="nombre">
+        <select id="seleccionarLinea" name="nombre">
         	<option value="none" selected disabled hidden>
                      Seleccione Linea
                  </option>
@@ -23,23 +51,16 @@
                     <c:set var="nombre" value="${linea}"/>
                         <option value="${nombre}">${nombre}</option>
                     </c:forEach>
-           </select> </div>
+           </select>
            <br><br/>
 
-           <select id="seleccionSentidoOculto">
-             <option selected="true" disabled="disabled">Seleccione Sentido</option>    
-           </select>
-           
-        <% 
-
-		%>
-
-       <div id="sentido1" class="forms">
+    
+       <div id="seleccionarSentido" class="forms">
            <select id="myselect1" name="nombre">
             <option value="none" selected disabled hidden>
                      Seleccione Sentido
                  </option>
-                 <c:forEach items="${sentido1}" var="parada">
+                 <c:forEach items="${lineas}" var="parada">
                     <c:set var="nombre" value="${parada}"/>
                         <option value="${nombre}">${nombre}</option>
                     </c:forEach>
@@ -48,8 +69,6 @@
         <br/><br/>          
         <input type="submit" value="Elegir"/>
     </form>
-</body>
-
 
 </body>
 </html>

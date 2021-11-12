@@ -17,7 +17,6 @@ public class servletMenuBus extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Lista de nombres de línea
 		// Por cada línea, los dos sentidos
-		
 		lineaBusDAO l = new lineaBusDAO();
 		try {
 			List<String> lineas = l.obtenerListaNombres();

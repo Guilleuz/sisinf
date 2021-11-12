@@ -27,7 +27,10 @@ public class servletValidarPoste extends HttpServlet {
 				request.getRequestDispatcher("/paradaBus").forward(request, response);
             }
 			else {
-				request.getRequestDispatcher("/index.html").forward(request, response);
+				request.setAttribute("error", true);
+				request.setAttribute("poste", "" + id);
+				request.getRequestDispatcher("/menuBus").forward(request, response);
+				// request.getRequestDispatcher("/index.html").forward(request, response);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

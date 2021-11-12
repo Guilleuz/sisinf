@@ -1,5 +1,9 @@
 package es.unizar.sisinf.grpV2_B.model;
 
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.sql.*;
 import es.unizar.sisinf.grpV2_B.db.*;
 import org.json.*;
@@ -142,7 +146,26 @@ public class biziDAO {
 	public int getNumeroBicis(int estacion) {
 		String id = "" + estacion;
 		id = new String(new char[3 - id.length()]).replace('\0', '0') + id;
-
+		try {
+			URL url = new URL("https://www.zaragoza.es/sede/servicio/urbanismo-infraestructuras/estacion-bicicleta/" + id
+					+ "?fl=bicisDisponibles&rf=html&srsname=wgs84");
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.connect();
+			String res = "";
+			Scanner scanner = new Scanner(url.openStream());
+			while (scanner.hasNext()) {
+		       res += scanner.nextLine();
+		    }
+			JSONObject nBicis = new JSONObject(res);
+			scanner.close();
+			return nBicis.getInt("bicisDisponibles");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		/*
 		// Consulta a realizar a la API
 		String consultaAPI = "https://www.zaragoza.es/sede/servicio/urbanismo-infraestructuras/estacion-bicicleta/" + id
 				+ "?fl=bicisDisponibles&rf=html&srsname=wgs84";
@@ -154,7 +177,8 @@ public class biziDAO {
 		String respuesta = target.request(MediaType.APPLICATION_JSON).get(String.class);
 
 		JSONObject nBicis = new JSONObject(respuesta);
-		return nBicis.getInt("bicisDisponibles");
+		return nBicis.getInt("bicisDisponibles");*/
+		return 0;
 	}
 }
 
