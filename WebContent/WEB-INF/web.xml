@@ -56,6 +56,12 @@
     <servlet-class>es.unizar.sisinf.grpV2_B.servlet.Bus.servletParadaBus</servlet-class>
   </servlet>
   
+  <servlet>
+    <display-name>Parada Autobús</display-name>
+    <servlet-name>validarPoste</servlet-name>
+    <servlet-class>es.unizar.sisinf.grpV2_B.servlet.Bus.servletValidarPoste</servlet-class>
+  </servlet> 
+  
   <!-- Mapping Bizi -->
   <servlet-mapping>
     <servlet-name>menuBizi</servlet-name>
@@ -93,4 +99,10 @@
     <servlet-name>paradaAutobus</servlet-name>
     <url-pattern>/paradaBus</url-pattern> 
   </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>validarPoste</servlet-name>
+    <url-pattern>/validarPoste</url-pattern> 
+  </servlet-mapping>
+  
 </web-app>

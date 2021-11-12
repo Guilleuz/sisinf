@@ -14,6 +14,7 @@ public class paradaBusDAO {
 	private static String insert = "INSERT INTO BusStation(id,direction,localization VALUES(?,?,?)";
 	private static String findById = "SELECT id, direction, localization::text FROM BusStation WHERE id=?";
 	private static String list = "SELECT * FROM BusStation";
+	private static String existePoste = "SELECT COUNT(*) AS total FROM BusStation where id=?";
 
     // devuelve una parada segun el id
 	public paradaBusVO obtenerParada(int id) throws SQLException {
@@ -108,4 +109,31 @@ public class paradaBusDAO {
 		}
 	}
 	
+	public boolean existeParada(int id) throws SQLException {
+		Connection conn = null;
+
+		try {
+
+			conn = PoolConnectionManager.getConnection();
+			PreparedStatement st = conn.prepareStatement(existePoste);
+			st.setInt(1, id);
+			ResultSet rs = st.executeQuery();
+			rs.next();
+			int total = rs.getInt("total");
+			rs.close();
+			st.close();
+			
+			return total == 1;
+
+		} catch (SQLException se) {
+			se.printStackTrace();
+
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+		} finally {
+			PoolConnectionManager.releaseConnection(conn);
+		}
+		
+		return false;
+	} 
 }

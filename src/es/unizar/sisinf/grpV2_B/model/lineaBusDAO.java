@@ -12,6 +12,7 @@ public class lineaBusDAO {
 	private static String findById = "SELECT * FROM BusLine WHERE id=?";
 	private static String list = "SELECT * FROM BusLine";
 	private static String listWays = "SELECT way FROM BusLine WHERE name=?";
+	private static String listarNombres = "SELECT DISTINCT name FROM BusLine ORDER BY name";
 
 	// devuelve lista de lineas de autobus
 	public List<lineaBusVO> obtenerListado() throws SQLException {
@@ -43,7 +44,36 @@ public class lineaBusDAO {
 		return listaLineas;
 	}
 
-	// devuelve lista de lineas segun un sentido dado
+	// Obtener listado de nombres de línea sin repetidos
+	public List<String> obtenerListaNombres() throws SQLException {
+		List<String> lista = new LinkedList<String>();
+		Connection conn = null;
+
+		try {
+			conn = PoolConnectionManager.getConnection();
+			
+			PreparedStatement st = conn.prepareStatement(listarNombres);
+			ResultSet rs = st.executeQuery();
+
+			while (rs.next()) {
+				lista.add(rs.getString("name"));
+			}
+			rs.close();
+			st.close();
+
+		} catch (SQLException se) {
+			se.printStackTrace();
+
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+		} finally {
+			PoolConnectionManager.releaseConnection(conn);
+		}
+
+		return lista;
+	}
+	
+	// devuelve lista de setidos segun una linea
 	public List<String> obtenerSentidos(String nombre) throws SQLException {
 		List<String> lista = new LinkedList<String>();
 		Connection conn = null;
