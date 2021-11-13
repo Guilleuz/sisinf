@@ -30,8 +30,8 @@ public class servletParadaTranvia extends HttpServlet {
 			int id = tranvia.idParada(nombre, sentido);
 			parada = tranvia.infoTranvia(id);
 			// TODO acceso API
-			//llegada = new llegadaTranviaDAO().getLlegadas(id);
-			llegada = new llegadaTranviaVO(1, "5 minutos", "10 minutos");
+			llegada = new llegadaTranviaDAO().getLlegadas(id);
+			//llegada = new llegadaTranviaVO(1, "5 minutos", "10 minutos");
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

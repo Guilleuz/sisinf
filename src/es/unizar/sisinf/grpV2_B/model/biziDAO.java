@@ -148,7 +148,7 @@ public class biziDAO {
 		id = new String(new char[3 - id.length()]).replace('\0', '0') + id;
 		try {
 			URL url = new URL("https://www.zaragoza.es/sede/servicio/urbanismo-infraestructuras/estacion-bicicleta/" + id
-					+ "?fl=bicisDisponibles&rf=html&srsname=wgs84");
+					+ ".json?fl=bicisDisponibles&rf=html&srsname=wgs84");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.connect();

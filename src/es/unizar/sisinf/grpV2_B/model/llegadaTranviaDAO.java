@@ -1,7 +1,11 @@
 package es.unizar.sisinf.grpV2_B.model;
 
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -17,34 +21,46 @@ public class llegadaTranviaDAO {
 	public llegadaTranviaVO getLlegadas(int parada) {
 
 		// Consulta a realizar a la API
-		String consultaAPI = "https://www.zaragoza.es/sede/servicio/urbanismo-infraestructuras/transporte-urbano/parada-tranvia/"
-				+ parada + "102?fl=destinos&rf=html&srsname=wgs84";
-		// Creamos el cliente para la conexión a la API
-		Client client = ClientBuilder.newClient();
-		WebTarget target = client.target(consultaAPI);
+		URL url;
+		try {
+			url = new URL("https://www.zaragoza.es/sede/servicio/urbanismo-infraestructuras/transporte-urbano/parada-tranvia/"
+					+ parada + ".json?fl=destinos&rf=html&srsname=wgs84");
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.connect();
+			String res = "";
+			Scanner scanner = new Scanner(url.openStream());
+			while (scanner.hasNext()) {
+		       res += scanner.nextLine();
+		    }
+			
 
-		// Lanzamos la consulta
-		String respuesta = target.request(MediaType.APPLICATION_JSON).get(String.class);
+			// Creamos una lista de objetos JSON a partir de la respuesta
+			JSONObject respuesta = new JSONObject(res);
+			JSONArray llegadas = respuesta.getJSONArray("destinos");
+			JSONObject llegada;
 
-		// Creamos una lista de objetos JSON a partir de la respuesta
-		JSONArray llegadas = new JSONArray(respuesta);
-		JSONObject llegada;
+			String primero = "Sin datos";
+			String segundo = "Sin datos";
 
-		String primero = "Sin datos";
-		String segundo = "Sin datos";
+			// Comprobamos el número de llegadas (0,1 o 2) y obtenemos los tiempos
+			if(llegadas.length() > 0) {
+				llegada = llegadas.getJSONObject(0);
+				int minutos = llegada.getInt("minutos");
+				primero = minutos + " minutos";
+			}
+			if(llegadas.length() > 1) {
+				llegada = llegadas.getJSONObject(1);
+				int minutos = llegada.getInt("minutos");
+				segundo = minutos + " minutos";
+			}
 
-		// Comprobamos el número de llegadas (0,1 o 2) y obtenemos los tiempos
-		switch (llegadas.length()) {
-		case 1:
-			llegada = llegadas.getJSONObject(0);
-			primero = llegada.getString("minutos");
-			primero += " minutos";
-		case 2:
-			llegada = llegadas.getJSONObject(1);
-			segundo = llegada.getString("minutos");
-			primero += " minutos";
+			return new llegadaTranviaVO(parada, primero, segundo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
-		return new llegadaTranviaVO(parada, primero, segundo);
+		
+			return new llegadaTranviaVO(parada, "Datos no disponibles", "Datos no disponibles");
 	}
 }

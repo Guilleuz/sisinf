@@ -33,9 +33,9 @@ public class servletParadaBus extends HttpServlet {
 		List<llegadaAutobusVO> llegada = new LinkedList<llegadaAutobusVO>();
 		try{
         	bus = new paradaBusDAO().obtenerParada(id);
-        	//TODO acceso API
-			llegada.add(new llegadaAutobusVO(bus.getNPoste(), "C1", "Gran Casa", "1 minuto", "6 minutos"));
-			llegada.add(new llegadaAutobusVO(bus.getNPoste(), "C2", "Gran Caso", "2 minutos", "23 minutos"));
+        	llegada = new llegadaAutobusDAO().getLlegadas(id);
+        	//llegada.add(new llegadaAutobusVO(bus.getNPoste(), "C1", "Gran Casa", "1 minuto", "6 minutos"));
+			//llegada.add(new llegadaAutobusVO(bus.getNPoste(), "C2", "Gran Caso", "2 minutos", "23 minutos"));
         }
         catch (SQLException e){
         	e.printStackTrace();
