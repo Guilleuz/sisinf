@@ -7,16 +7,24 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<script type="text/javascript"
-    src="jquery-ui-1.10.0/tests/jquery-1.9.0.js"></script>
-<script src="jquery-ui-1.10.0/ui/jquery-ui.js"></script>
+
+<script src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
 <script>
 $(function() {
     $(".forms").hide();
-   $('#seleccionarLinea').on('change',function(){
-        $("#seleccionSentidoOculto").hide()
-        $("seleccionarSentido").show();
-        }
+	let data = '${sentidosLinea}'
+	let json = JSON.parse(data);
+	$("#seleccionarLinea").change(function() {
+		let linea = $(this).val();
+		let s1 = json[linea][0];
+		let s2 = json[linea][1];
+		
+        document.getElementById('sentido1').value = s1;
+        document.getElementById('sentido2').value = s2;
+        document.getElementById('sentido1').innerHTML = s1;
+        document.getElementById('sentido2').innerHTML = s2;
+        $("#seleccionarSentidoDivOculto").hide();
+        $(".forms").hide().parent().find("#seleccionarSentidoDiv").show();
     });
 });
 </script>
@@ -39,11 +47,12 @@ $(function() {
 		<input type="submit" value="Buscar">
 	</form>
 	<%= msjError%>
+    <br><br/>
 
-
+    
 	<form action="/sisinf/linea" method="get">
 
-        <select id="seleccionarLinea" name="nombre">
+        <select id="seleccionarLinea" name="linea">
         	<option value="none" selected disabled hidden>
                      Seleccione Linea
                  </option>
@@ -52,18 +61,21 @@ $(function() {
                         <option value="${nombre}">${nombre}</option>
                     </c:forEach>
            </select>
-           <br><br/>
-
-    
-       <div id="seleccionarSentido" class="forms">
-           <select id="myselect1" name="nombre">
+            
+        <div id="seleccionarSentidoDivOculto">
+            <select id="seleccionSentidoOculto">
+             <option selected="true" disabled="disabled">Seleccione Sentido</option>    
+           </select>
+           </div>
+           
+           
+       <div id="seleccionarSentidoDiv" class="forms">
+           <select id="seleccionarSentido" name="sentido">
             <option value="none" selected disabled hidden>
                      Seleccione Sentido
                  </option>
-                 <c:forEach items="${lineas}" var="parada">
-                    <c:set var="nombre" value="${parada}"/>
-                        <option value="${nombre}">${nombre}</option>
-                    </c:forEach>
+            <option id="sentido1" value=""></option>
+            <option id="sentido2" value=""></option>
            </select> </div>
 
         <br/><br/>          

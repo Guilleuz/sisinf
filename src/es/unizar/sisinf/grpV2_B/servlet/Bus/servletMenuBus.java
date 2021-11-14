@@ -7,6 +7,7 @@ import java.util.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
+import org.json.*;
 
 public class servletMenuBus extends HttpServlet {
 	/**
@@ -26,8 +27,12 @@ public class servletMenuBus extends HttpServlet {
 				sentidosLinea.put(i, l.obtenerSentidos(i));
 			}
 			
+			JSONObject json =  new JSONObject(sentidosLinea);
+			String sentidosLineaJSON = json.toString();
+			//System.out.printf("%s", json);
+			System.out.printf("%s", sentidosLineaJSON);
 			request.setAttribute("lineas", lineas);
-			request.setAttribute("sentidosLinea", sentidosLinea);
+			request.setAttribute("sentidosLinea", sentidosLineaJSON);
 			request.getRequestDispatcher("mostrarMenuBus.jsp").forward(request, response);
 			
 		} catch (SQLException e) {
