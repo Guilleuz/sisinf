@@ -62,6 +62,13 @@
     <servlet-class>es.unizar.sisinf.grpV2_B.servlet.Bus.servletValidarPoste</servlet-class>
   </servlet> 
   
+  <!-- Servlet Sesión -->
+  <servlet>
+    <display-name>Introducir Parada</display-name>
+    <servlet-name>introducirParada</servlet-name>
+    <servlet-class>es.unizar.sisinf.grpV2_B.servlet.Sesion.introducirParada</servlet-class>
+  </servlet>
+  
   <!-- Mapping Bizi -->
   <servlet-mapping>
     <servlet-name>menuBizi</servlet-name>
@@ -103,6 +110,12 @@
   <servlet-mapping>
     <servlet-name>validarPoste</servlet-name>
     <url-pattern>/validarPoste</url-pattern> 
+  </servlet-mapping>
+  
+  <!-- Mapping Sesión --> 
+  <servlet-mapping>
+    <servlet-name>introducirParada</servlet-name>
+    <url-pattern>/introducirParada</url-pattern> 
   </servlet-mapping>
   
 </web-app>

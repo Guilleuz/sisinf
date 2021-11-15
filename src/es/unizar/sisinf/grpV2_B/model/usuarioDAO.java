@@ -10,9 +10,8 @@ public class usuarioDAO {
 	private static String countByUserName = "SELECT count(*) cuenta FROM Usuario WHERE name = ?";
 	private static String findByUserName = "SELECT * FROM Usuario WHERE name = ?";
 
-	public boolean validateUser(usuarioVO user) {
-		boolean result = false;
-
+	public int validateUser(usuarioVO user) {
+		int result = 0;
 		try {
 			// Abrimos la conexión e inicializamos los parámetros
 			Connection conn = PoolConnectionManager.getConnection();
@@ -36,10 +35,13 @@ public class usuarioDAO {
 				// Comparamos contraseñas
 				findRs.next();
 				String dbpwd = findRs.getString("password");
+				System.out.println("Contraseñas: " + user.getPassword() + ":" + dbpwd);
 				if (dbpwd.contentEquals(user.getPassword())) {
-					result = true;
+					result = 0; // Datos correctos
 				}
+				else result = 2;	 // Contraseña incorrecta
 			}
+			else result = 1; // Usuario no existe
 
 			// liberamos los recursos utilizados
 			findRs.close();
