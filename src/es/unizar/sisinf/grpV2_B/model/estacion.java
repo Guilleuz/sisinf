@@ -5,12 +5,14 @@ import org.postgis.*;
 public class estacion {
     protected int id;
     protected String direccion;
-    protected PGgeometry localizacion;
+    protected double latitud;
+    protected double longitud;
 
-    public estacion(int id, String dir, PGgeometry localizacion) {
+    public estacion(int id, String dir, double lat, double longitud) {
         this.id = id;
         this.direccion = dir;
-        this.localizacion = localizacion;
+        this.latitud = lat;
+        this.longitud = longitud;
     }
 
     // Métodos get
@@ -22,9 +24,13 @@ public class estacion {
         return direccion;
     }
 
-    public PGgeometry getLocalizacion() {
-        return localizacion;
+    public double getLatitud() {
+        return latitud;
     }
+    public double getLongitud() {
+        return longitud;
+    }
+    
     // Métodos set
 
     public void setId(int id) {
@@ -35,7 +41,8 @@ public class estacion {
         this.direccion = direccion;
     }
 
-    public void setLocalizacion(PGgeometry localizacion) {
-        this.localizacion = localizacion;
+    public void setLocalizacion(double latitud, double longitud) {
+        this.latitud = latitud;
+        this.longitud = longitud;
     }
 }

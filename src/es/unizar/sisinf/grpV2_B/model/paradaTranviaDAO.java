@@ -9,12 +9,12 @@ import es.unizar.sisinf.grpV2_B.db.PoolConnectionManager;
 
 public class paradaTranviaDAO {
 
-	private static String insertar = "INSERT INTO TramStation (id, name, way, orden, direction, localization) VALUES(?,?,?,?,?,?))";
+	private static String insertar = "INSERT INTO TramStation (id, name, way, orden, direction, lat, long) VALUES(?,?,?,?,?,?,?)";
 	private static String lista = "SELECT * FROM TramStation ORDER BY id ASC";
 	private static String listaSentidos = "SELECT DISTINCT way FROM TramStation";
-	private static String listaOrdenada = "SELECT id, name, way, orden, direction, localization::text FROM TramStation WHERE way = ? ORDER BY orden";
+	private static String listaOrdenada = "SELECT id, name, way, orden, direction, lat, long FROM TramStation WHERE way = ? ORDER BY orden";
 	private static String idParada = "SELECT id FROM TramStation WHERE name = ? AND way = ?";
-	private static String info = "SELECT id, name, orden, way, direction, localization::text FROM TramStation WHERE id = ?";
+	private static String info = "SELECT id, name, orden, way, direction, lat, long FROM TramStation WHERE id = ?";
 	
 	// devuelve id de parada segun nombre y sentido
 	public int idParada(String nombre, String sentido) throws SQLException {
@@ -60,7 +60,7 @@ public class paradaTranviaDAO {
 
 			while (rs.next()) {
 				paradaTranviaVO parada = new paradaTranviaVO(rs.getInt("id"), rs.getString("name"), rs.getString("way"), rs.getInt("orden"),
-						rs.getString("direction"), new PGgeometry(rs.getString("localization")));
+						rs.getString("direction"), rs.getDouble("lat"), rs.getDouble("long"));
 				listaParadas.add(parada);
 			}
 			rs.close();
@@ -125,7 +125,7 @@ public class paradaTranviaDAO {
 
 			while (rs.next()) {
 				paradaTranviaVO parada = new paradaTranviaVO(rs.getInt("id"), rs.getString("name"), rs.getString("way"), rs.getInt("orden"),
-						rs.getString("direction"), (PGgeometry) rs.getObject("localization"));
+						rs.getString("direction"), rs.getDouble("lat"), rs.getDouble("long"));
 				listaParadas.add(parada);
 			}
 			rs.close();
@@ -159,7 +159,8 @@ public class paradaTranviaDAO {
 			addParada.setString(3, parada.getSentido());
 			addParada.setString(4, Integer.toString(parada.getOrden()));
 			addParada.setString(5, parada.getDireccion());
-			addParada.setObject(6, parada.getLocalizacion());
+			addParada.setString(6, Double.toString(parada.getLatitud())); 
+			addParada.setString(7, Double.toString(parada.getLongitud())); 
 			addParada.executeUpdate();
 
 			rs.close();
@@ -187,7 +188,7 @@ public class paradaTranviaDAO {
 			ResultSet rs = lsEst.executeQuery();
 			rs.next();
 			estacion = new paradaTranviaVO(rs.getInt("id"), rs.getString("name"), rs.getString("way"), 
-								  rs.getInt("orden"), rs.getString("direction"), new PGgeometry(rs.getString("localization")));
+								  rs.getInt("orden"), rs.getString("direction"), rs.getDouble("lat"), rs.getDouble("long"));
 			rs.close();
 			lsEst.close();
 

@@ -7,8 +7,8 @@ public class biziVO extends estacion {
     private int nBicicletas;
 
     // Constructor
-    public biziVO(int id, int capacidad, int nBicis, String dir, PGgeometry localizacion) {
-        super(id, dir, localizacion);
+    public biziVO(int id, int capacidad, int nBicis, String dir, double latitud, double longitud) {
+        super(id, dir, latitud, longitud);
         this.capacidad = capacidad;
         this.nBicicletas = nBicis;
     }

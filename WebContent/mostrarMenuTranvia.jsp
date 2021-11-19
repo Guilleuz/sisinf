@@ -18,10 +18,12 @@ $(function() {
             case "${sentidos.get(0)}":
             		$("#seleccionParadaOculto").hide();
                 $(".forms").hide().parent().find("#sentido1").show();
+                (".forms").parent().find("#sentido2").hide();
                 break;
             case "${sentidos.get(1)}":
             		$("#seleccionParadaOculto").hide();
                 $(".forms").hide().parent().find("#sentido2").show();
+                $(".forms").parent().find("#sentido1").hide();
                 break;
         }
     });
@@ -59,7 +61,7 @@ $(function() {
            
         
            <div id="sentido2" class="forms">
-            <select id="myselect2" name="nombre">
+            <select id="myselect2" name="nombre2">
              <option value="none" selected disabled hidden>
                       Seleccione Parada
                   </option>

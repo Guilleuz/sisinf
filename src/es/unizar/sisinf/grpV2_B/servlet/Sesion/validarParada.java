@@ -37,18 +37,30 @@ public class validarParada extends HttpServlet {
             request.setAttribute("latitud", lat);
             request.setAttribute("longitud", lon);
             
-            if (poste == null || dir == null || lat == null || lon == null) {
+            if (poste == "" || dir == "" || lat == "" || lon == "" || poste == null || dir == null || lat == null || lon == null) {
             	request.setAttribute("error", "Campos vacíos");
             	request.getRequestDispatcher("introducirParada.jsp").forward(request, response);
             }
-            
-            paradaBusDAO bus = new paradaBusDAO();
-			if(bus.existeParada(Integer.valueOf("poste"))) {
-				request.setAttribute("error", "Numero de poste ya existente");
-				request.getRequestDispatcher("introducirParada.jsp").forward(request, response);
-			}
-			
-			paradaBusVO parada = new paradaBusVO(Integer.valueOf(poste), dir, new Point(Double.parseDouble(lat), Double.parseDouble(lon)));
+            else {
+            	int posteInt = 0;
+            	try {
+                	posteInt = Integer.valueOf(poste);
+                }
+                catch (NumberFormatException ex){
+                    ex.printStackTrace();
+                }
+	            paradaBusDAO bus = new paradaBusDAO();
+				if(bus.existeParada(posteInt)) {
+					request.setAttribute("error", "Numero de poste ya existente");
+					request.getRequestDispatcher("introducirParada.jsp").forward(request, response);
+				}
+				else {
+					paradaBusVO parada = new paradaBusVO(posteInt, dir, Double.valueOf(lat), Double.valueOf(lon));
+					bus.anyadir(parada);
+					request.setAttribute("mensaje", "La parada " + poste + " ha sido introducida correctamente");
+					request.getRequestDispatcher("introducirParada.jsp").forward(request, response);
+				}
+            }
 		}  catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

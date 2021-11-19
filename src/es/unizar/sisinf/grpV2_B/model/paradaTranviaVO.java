@@ -8,8 +8,8 @@ public class paradaTranviaVO extends estacion {
 	private int orden;
 
 	// Constructor
-	public paradaTranviaVO(int id, String nombre, String sentido, int orden, String dir, PGgeometry localizacion) {
-		super(id, dir, localizacion);
+	public paradaTranviaVO(int id, String nombre, String sentido, int orden, String dir, double latitud, double longitud) {
+		super(id, dir, latitud, longitud);
 		this.nombre = nombre;
 		this.sentido = sentido;
 		this.orden = orden;

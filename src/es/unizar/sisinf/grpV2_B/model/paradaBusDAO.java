@@ -11,8 +11,8 @@ import es.unizar.sisinf.grpV2_B.db.PoolConnectionManager;
 
 public class paradaBusDAO {
 
-	private static String insert = "INSERT INTO BusStation(id,direction,localization VALUES(?,?,?)";
-	private static String findById = "SELECT id, direction, localization::text FROM BusStation WHERE id=?";
+	private static String insert = "INSERT INTO BusStation(id,direction, lat, long) VALUES(?,?,?,?)";
+	private static String findById = "SELECT id, direction, lat, long FROM BusStation WHERE id=?";
 	private static String list = "SELECT * FROM BusStation";
 	private static String existePoste = "SELECT COUNT(*) AS total FROM BusStation where id=?";
 
@@ -29,7 +29,7 @@ public class paradaBusDAO {
 			st.setInt(1, id);
 			ResultSet rs = st.executeQuery();
 			rs.next();
-			parada = new paradaBusVO(rs.getInt("id"), rs.getString("direction"), new PGgeometry(rs.getString("localization")));
+			parada = new paradaBusVO(rs.getInt("id"), rs.getString("direction"), rs.getDouble("lat"), rs.getDouble("long"));
 			rs.close();
 			st.close();
 
@@ -54,15 +54,13 @@ public class paradaBusDAO {
 
 		try {
 			conn = PoolConnectionManager.getConnection();
-			((org.postgresql.PGConnection) conn).addDataType("geometry",
-					(Class<? extends PGobject>) Class.forName("org.postgis.PGgeometry"));
 			PreparedStatement st = conn.prepareStatement(list);
 
 			ResultSet rs = st.executeQuery();
 
 			while (rs.next()) {
 				paradaBusVO parada = new paradaBusVO(rs.getInt("id"), rs.getString("direction"),
-						(PGgeometry) rs.getObject(3));
+						rs.getDouble("lat"), rs.getDouble("long"));
 				listaParadas.add(parada);
 			}
 			rs.close();
@@ -88,15 +86,13 @@ public class paradaBusDAO {
 
 			conn = PoolConnectionManager.getConnection();
 			PreparedStatement st = conn.prepareStatement(insert);
-			ResultSet rs = st.executeQuery();
 
-			st.setString(1, Integer.toString(parada.getID()));
+			st.setInt(1, parada.getID());
 			st.setString(2, parada.getDireccion());
-			st.setObject(3, parada.getLocalizacion());
-
+			st.setDouble(3, parada.getLatitud()); 
+			st.setDouble(4, parada.getLongitud()); 
 			st.executeUpdate();
 
-			rs.close();
 			st.close();
 
 		} catch (SQLException se) {

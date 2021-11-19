@@ -18,9 +18,9 @@ import java.util.*;
 
 public class biziDAO {
 
-	private static String insertar = "INSERT INTO BiziStation (id, capacity, available, direction, localization) VALUES(?,?,?,?,?)";
-	private static String lsEstaciones = "SELECT id, capacity, available, direction, localization::text FROM BiziStation ORDER BY id ASC";
-	private static String info = "SELECT id, capacity, available, direction, localization::text FROM BiziStation WHERE id=?";
+	private static String insertar = "INSERT INTO BiziStation (id, capacity, available, direction, lat, long) VALUES(?,?,?,?,?,?)";
+	private static String lsEstaciones = "SELECT id, capacity, available, direction, lat, long FROM BiziStation ORDER BY id ASC";
+	private static String info = "SELECT id, capacity, available, direction, lat, long FROM BiziStation WHERE id=?";
 	// ST_AsText(your_geom_column)
 	// geom::text
 	
@@ -56,12 +56,8 @@ public class biziDAO {
 
 
 			while (rs.next()) {
-				String localization  = rs.getString("localization");
-				System.out.println("Punto: " + localization);
-				
-				//geom.toString())
 				biziVO estacion = new biziVO(rs.getInt("id"), rs.getInt("capacity"), rs.getInt("available"), 
-								  rs.getString("direction"), new PGgeometry(localization));
+								  rs.getString("direction"), rs.getDouble("lat"), rs.getDouble("long"));
 				listaEstaciones.add(estacion);
 			}
 			rs.close();
@@ -92,7 +88,7 @@ public class biziDAO {
 			ResultSet rs = lsEst.executeQuery();
 			rs.next();
 			estacion = new biziVO(rs.getInt("id"), rs.getInt("capacity"), 0, 
-								  rs.getString("direction"), new PGgeometry(rs.getString("localization")));
+								  rs.getString("direction"), rs.getDouble("lat"), rs.getDouble("long"));
 
 			estacion.setBicis(getNumeroBicis(id));
 			System.out.println(estacion.getID() + " " + estacion.getDireccion() + " " + estacion.getBicis());
@@ -123,7 +119,9 @@ public class biziDAO {
 			addEst.setString(2, Integer.toString(estacion.getCapacidad()));
 			addEst.setString(3, Integer.toString(estacion.getBicis()));
 			addEst.setString(4, estacion.getDireccion());
-			addEst.setObject(5, estacion.getLocalizacion()); // Añadir tipo geometry
+			addEst.setString(5, Double.toString(estacion.getLatitud())); 
+			addEst.setString(6, Double.toString(estacion.getLongitud())); 
+
 
 			ResultSet rs = addEst.executeQuery();
 

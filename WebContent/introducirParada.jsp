@@ -9,12 +9,31 @@
 <title>Introducir Parada</title>
 </head>
 <body>
-<form method="post" action="/validarPoste">
-    <input type="text" name="ID" placeholder="Número de poste"/>
-    <input type="text" name="direccion" placeholder="Direccion"/>
-    <input type="number" name="latitud" placeholder="latitud"/>
-    <input type="number" name="longitud" placeholder="longitud"/>
+<% 
+String mensaje = "";
+String dir = "";
+String poste = "";
+double longitud = 0.0;
+double latitud = 0.0;
+if (request.getAttribute("error") != null) {
+	mensaje = (String) request.getAttribute("error");
+	poste = (String) request.getAttribute("poste");
+	dir = (String) request.getAttribute("direccion");
+	String lat = (String) request.getAttribute("latitud");
+	String lon = (String) request.getAttribute("longitud");
+	if (lat != "") latitud = Double.valueOf(lat);
+	if (lon != "") longitud = Double.valueOf(lon);
+}
+else if (request.getAttribute("mensaje") != null) mensaje = (String) request.getAttribute("mensaje");
+%>
+<form method="post" action="/sisinf/validarParada">
+    <input type="text" name="ID" placeholder="Número de poste" value="<%= poste%>"/>
+    <input type="text" name="direccion" placeholder="Direccion" value="<%= dir%>"/>
+    <input type="number" name="latitud" placeholder="latitud" value="<%= latitud%>"/>
+    <input type="number" name="longitud" placeholder="longitud" value="<%= longitud%>"/>
     <input type="submit" value="Añadir"/>
  </form>
+<br>
+<%= mensaje%>
 </body>
 </html>
