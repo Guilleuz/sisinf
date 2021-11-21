@@ -9,8 +9,12 @@
 <title>Lista Estaciones Bizis</title>
 </head>
 <body>
+    <h1>Menú Bizi</h1>
     <form action="/sisinf/estacionBizi" method="get">
         <select name="id">
+        <option value="none" selected disabled hidden>
+                     Seleccione Estacion
+                 </option>
             <c:forEach items="${lista}" var="Estacion">
             <c:set var="ID" value="${Estacion.getID()}"/>
             <c:set var="dir" value="${Estacion.getDireccion()}"/>

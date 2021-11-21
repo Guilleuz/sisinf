@@ -55,14 +55,12 @@ public class paradaTrayectoDAO {
 
 			conn = PoolConnectionManager.getConnection();
 			PreparedStatement addParada = conn.prepareStatement(insertar);
-			ResultSet rs = addParada.executeQuery();
 
-			addParada.setString(1, Integer.toString(parada.getParada()));
-			addParada.setString(2, Integer.toString(parada.getLinea()));
-			addParada.setString(3, Integer.toString(parada.getOrden()));
+			addParada.setInt(1, parada.getParada());
+			addParada.setInt(2, parada.getLinea());
+			addParada.setInt(3, parada.getOrden());
 			addParada.executeUpdate();
 
-			rs.close();
 			addParada.close();
 
 		} catch (SQLException se) {

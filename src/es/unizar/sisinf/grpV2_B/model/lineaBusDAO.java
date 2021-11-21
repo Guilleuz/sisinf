@@ -168,7 +168,7 @@ public class lineaBusDAO {
 		try {
 			conn = PoolConnectionManager.getConnection();
 			PreparedStatement st = conn.prepareStatement(insert);
-			st.setString(1, Integer.toString(linea.getId()));
+			st.setInt(1, linea.getId());
 			st.setString(2, linea.getNombre());
 			st.setString(3, linea.getSentido());
 
