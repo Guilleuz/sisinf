@@ -115,19 +115,14 @@ public class biziDAO {
 			
 			PreparedStatement addEst = conn.prepareStatement(insertar);
 
-			addEst.setString(1, Integer.toString(estacion.getID()));
-			addEst.setString(2, Integer.toString(estacion.getCapacidad()));
-			addEst.setString(3, Integer.toString(estacion.getBicis()));
+			addEst.setInt(1, estacion.getID());
+			addEst.setInt(2, estacion.getCapacidad());
+			addEst.setInt(3, estacion.getBicis());
 			addEst.setString(4, estacion.getDireccion());
-			addEst.setString(5, Double.toString(estacion.getLatitud())); 
-			addEst.setString(6, Double.toString(estacion.getLongitud())); 
-
-
-			ResultSet rs = addEst.executeQuery();
+			addEst.setDouble(5, estacion.getLatitud()); 
+			addEst.setDouble(6, estacion.getLongitud()); 
 
 			addEst.executeUpdate();
-
-			rs.close();
 			addEst.close();
 
 		} catch (SQLException se) {

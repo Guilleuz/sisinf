@@ -74,6 +74,13 @@
     <servlet-class>es.unizar.sisinf.grpV2_B.servlet.Sesion.validarParada</servlet-class>
   </servlet>
   
+  <!-- Servlet Poblar -->
+  <servlet>
+    <display-name>Poblar</display-name>
+    <servlet-name>poblarDB</servlet-name>
+    <servlet-class>es.unizar.sisinf.grpV2_B.model.poblarBBDD</servlet-class>
+  </servlet>
+  
   <!-- Mapping Bizi -->
   <servlet-mapping>
     <servlet-name>menuBizi</servlet-name>
@@ -126,5 +133,10 @@
     <servlet-name>validarParada</servlet-name>
     <url-pattern>/validarParada</url-pattern> 
   </servlet-mapping>
-  
+ 
+  <!-- Mapping Poblar --> 
+  <servlet-mapping>
+    <servlet-name>poblarDB</servlet-name>
+    <url-pattern>/poblarDB</url-pattern> 
+  </servlet-mapping>
 </web-app>

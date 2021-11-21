@@ -22,7 +22,12 @@ public class servletParadaTranvia extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String sentido = request.getParameter("sentido");
-		String nombre = request.getParameter("nombre");
+		String nombre = "";
+		if (sentido.equals("Avenida Academia")) {
+			nombre = request.getParameter("n1");
+		} else {
+			nombre = request.getParameter("n2");
+		}
 		paradaTranviaDAO tranvia = new paradaTranviaDAO();
 		paradaTranviaVO parada = null;
 		llegadaTranviaVO llegada = null;

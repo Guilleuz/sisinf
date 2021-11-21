@@ -49,7 +49,7 @@ $(function() {
            
         
            <div id="sentido1" class="forms">
-           <select id="myselect1" name="nombre">
+           <select id="myselect1" name="n1">
             <option value="none" selected disabled hidden>
                      Seleccione Parada
                  </option>
@@ -61,7 +61,7 @@ $(function() {
            
         
            <div id="sentido2" class="forms">
-            <select id="myselect2" name="nombre2">
+            <select id="myselect2" name="n2">
              <option value="none" selected disabled hidden>
                       Seleccione Parada
                   </option>

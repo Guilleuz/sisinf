@@ -152,18 +152,16 @@ public class paradaTranviaDAO {
 			conn = PoolConnectionManager.getConnection();
 			
 			PreparedStatement addParada = conn.prepareStatement(insertar);
-			ResultSet rs = addParada.executeQuery();
 
-			addParada.setString(1, Integer.toString(parada.getID()));
+			addParada.setInt(1, parada.getID());
 			addParada.setString(2, parada.getNombre());
 			addParada.setString(3, parada.getSentido());
-			addParada.setString(4, Integer.toString(parada.getOrden()));
+			addParada.setInt(4, parada.getOrden());
 			addParada.setString(5, parada.getDireccion());
-			addParada.setString(6, Double.toString(parada.getLatitud())); 
-			addParada.setString(7, Double.toString(parada.getLongitud())); 
+			addParada.setDouble(6, parada.getLatitud()); 
+			addParada.setDouble(7, parada.getLongitud()); 
+			
 			addParada.executeUpdate();
-
-			rs.close();
 			addParada.close();
 
 		} catch (SQLException se) {
