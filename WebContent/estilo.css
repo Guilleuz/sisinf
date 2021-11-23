@@ -1,0 +1,91 @@
+@charset "UTF-8";
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: #ff2222;
+  }
+  
+  .topnav {
+      background-color: #333;
+      overflow: hidden;
+      padding: 30px 4%;
+      padding-top: 12px;
+      padding-bottom: 5px;
+      background-color: #ff2222;
+      
+  }
+
+img.imagenBizi {
+      padding-top: 30px;
+}
+img.logo {
+    width: 10%;
+}
+img {
+  width: 20%;
+}
+ 
+.linea {
+  padding: 0.5px;
+  background-color: #ffffff;
+}
+
+.button_iniciarSesion {
+    
+    width: 10%;
+    min-width: 150px;
+    height: 100%;
+    float: right;
+    padding: 8px 12px;
+    
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 13px;
+    text-align: center;
+    
+    border: solid;
+    border-color:  #ffffff;
+    border-width: 3px;
+    border-radius: 50px;
+    
+    cursor: pointer;
+    transition: background-color 0.3s ease 0s;
+  }
+  
+  .button_iniciarSesion:hover {
+     background-color: #FFFFFF;
+     color: #000000;
+  }
+  
+  .inicio {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    max-width: 50%;
+    text-align: center;
+    height: 50%;
+    width: 50%;
+    
+  }
+
+body, html {
+  height: 100%;
+}
+
+.inicio2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+ 
+  
+  .imagenTranvia:hover {
+    cursor:pointer;
+  }
+  
