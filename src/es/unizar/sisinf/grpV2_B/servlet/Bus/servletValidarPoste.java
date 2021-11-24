@@ -23,17 +23,18 @@ public class servletValidarPoste extends HttpServlet {
     	
     	paradaBusDAO p = new paradaBusDAO();
     	try {
+    		// Consultamos la DB para comprobar si una parada determinada existe
 			if (p.existeParada(id)) {
+				// Si existe, redirigimos al servlet encargado de mostrar sus datos
 				request.getRequestDispatcher("/paradaBus").forward(request, response);
             }
 			else {
+				// Si no, redirigimos al menú de autobús, con el mensaje de error correspondiente
 				request.setAttribute("error", true);
 				request.setAttribute("poste", "" + id);
 				request.getRequestDispatcher("/menuBus").forward(request, response);
-				// request.getRequestDispatcher("/index.html").forward(request, response);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

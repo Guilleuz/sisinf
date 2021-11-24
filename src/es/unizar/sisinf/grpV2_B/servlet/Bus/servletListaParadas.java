@@ -20,6 +20,7 @@ public class servletListaParadas extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Obtenemos el listado de las paradas de bus de una línea en un determinado sentido
 		String nombre = request.getParameter("linea");
 		String sentido= request.getParameter("sentido");
 		lineaBusVO linea = null;
@@ -33,10 +34,10 @@ public class servletListaParadas extends HttpServlet {
             }
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		// Mostramos dicho listado en mostrarParadasLinea.jsp
 		request.setAttribute("paradas", paradasBus);
         request.getRequestDispatcher("mostrarParadasLinea.jsp").forward(request, response);
     }

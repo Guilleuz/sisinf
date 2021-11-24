@@ -21,6 +21,8 @@ public class servletParadaTranvia extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Obtenemos el nombre y el sentido de la parada a partir del formulario
+		
 		String sentido = request.getParameter("sentido");
 		String nombre = "";
 		if (sentido.equals("Avenida Academia")) {
@@ -32,17 +34,17 @@ public class servletParadaTranvia extends HttpServlet {
 		paradaTranviaVO parada = null;
 		llegadaTranviaVO llegada = null;
 		try {
+			// Consultamos la DB para obtener los datos de la parada
 			int id = tranvia.idParada(nombre, sentido);
 			parada = tranvia.infoTranvia(id);
-			// TODO acceso API
+			// Consultamos la API para obtener los tiempos de llegada
 			llegada = new llegadaTranviaDAO().getLlegadas(id);
-			//llegada = new llegadaTranviaVO(1, "5 minutos", "10 minutos");
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		// Mostramos la información de la parada y los tiempos de llegada en mostrarParadaTranvia.jsp
 		request.setAttribute("parada", parada);
 		request.setAttribute("llegada", llegada);
         request.getRequestDispatcher("mostrarParadaTranvia.jsp").forward(request, response);

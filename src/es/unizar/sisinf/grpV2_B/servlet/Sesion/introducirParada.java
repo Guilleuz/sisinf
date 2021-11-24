@@ -32,21 +32,18 @@ public class introducirParada extends HttpServlet {
 			String usuario = request.getParameter("usuario");
 			String pass = request.getParameter("pass");
 			System.out.println(usuario + ":" + pass + ":");
-			Enumeration<String> e = request.getAttributeNames();
-			while(e.hasMoreElements()) {
-				System.out.println(e.nextElement());
-			}
 			
+			// Comprobamos si alguno de los campos del formulario está vacío
 			if(usuario == null || (usuario.trim().equals(""))) errors.put("usuario", "Campo Obligatorio");
 			if(pass == null || (pass.trim().equals(""))) errors.put("pass", "Campo Obligatorio");
 			
-			//String encript=DigestUtils.shaHex(texto);
 			if(!errors.isEmpty()) {
 				// Redireccion con errores al jsp
 				request.setAttribute("errores", errors);
 				request.getRequestDispatcher("iniciarSesion.jsp").forward(request, response);
 			}
 			else {
+				// Comprobamos si el nombre de usuario y la contraseña son correctas
 				usuarioVO user = new usuarioVO(usuario, pass);
 				int result = new usuarioDAO().validateUser(user);
 				switch(result) {
@@ -74,6 +71,7 @@ public class introducirParada extends HttpServlet {
 			}
 			
 		} else {
+			// Si ha iniciado sesión, redirigimos directamente a introducirParada.jsp
 			System.out.println("Sesión iniciada");
 			response.sendRedirect("introducirParada.jsp");
 		}

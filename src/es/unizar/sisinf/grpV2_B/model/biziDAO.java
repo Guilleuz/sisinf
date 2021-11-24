@@ -16,28 +16,12 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import java.util.*;
 
+//Clase DAO para las estaciones Bizi
 public class biziDAO {
 
 	private static String insertar = "INSERT INTO BiziStation (id, capacity, available, direction, lat, long) VALUES(?,?,?,?,?,?)";
 	private static String lsEstaciones = "SELECT id, capacity, available, direction, lat, long FROM BiziStation ORDER BY id ASC";
 	private static String info = "SELECT id, capacity, available, direction, lat, long FROM BiziStation WHERE id=?";
-	// ST_AsText(your_geom_column)
-	// geom::text
-	
-	
-	//SELECT ST_X(the_geom), ST_Y(the_geom), ST_AsText(the_geom) FROM myTable;
-	// -> 0 , 03223, POINT((0,03223))
-	
-	// // geom::text -> WKT: 3238399FA12349
-
-	// INSERT ST_GeomFromText(?)
-	//3238399FA12349 -> POINT ((0,03223))
-	
-	//ST_AsEWKT(localization);
-
-	
-
-	//SELECT * ST_AsText(the_geom) FROM table2;
 
 	// devuelve una lista de las estaciones bizi
 	public List<biziVO> listar() throws SQLException {
@@ -47,11 +31,8 @@ public class biziDAO {
 
 		try {
 			conn = PoolConnectionManager.getConnection();
-			
-			//((org.postgresql.PGConnection)conn).addDataType("geometry",Class.forName("org.postgis.PGgeometry"));
+			// Consultamos la DB para obtener el listado
 			PreparedStatement lsEst = conn.prepareStatement(lsEstaciones);
-			//((org.postgresql.PGConnection)conn).addDataType("geometry", (Class<? extends PGobject>) Class.forName("org.postgis.PGgeometry"));
-			
 			ResultSet rs = lsEst.executeQuery();
 
 
@@ -75,6 +56,7 @@ public class biziDAO {
 		return listaEstaciones;
 	}
 	
+	// Devuelve la información de una estación Bizi determinada
 	public biziVO infoBizi(int id) throws SQLException {
 
 		Connection conn = null;
@@ -83,6 +65,7 @@ public class biziDAO {
 		try {
 			conn = PoolConnectionManager.getConnection();
 			
+			// Obtenemos la información de la estación de la DB
 			PreparedStatement lsEst = conn.prepareStatement(info);
 			lsEst.setInt(1, id);
 			ResultSet rs = lsEst.executeQuery();
@@ -90,6 +73,7 @@ public class biziDAO {
 			estacion = new biziVO(rs.getInt("id"), rs.getInt("capacity"), 0, 
 								  rs.getString("direction"), rs.getDouble("lat"), rs.getDouble("long"));
 
+			// Consultamos el número de bicis disponibles en la API
 			estacion.setBicis(getNumeroBicis(id));
 			System.out.println(estacion.getID() + " " + estacion.getDireccion() + " " + estacion.getBicis());
 			rs.close();
@@ -106,7 +90,37 @@ public class biziDAO {
 		return estacion;
 	}
 
-	// añade una estacion bizi a la base de datos
+	// Dado número de estacion, obtenemos de la API el número de bicis disponibles
+	public int getNumeroBicis(int estacion) {
+		String id = "" + estacion;
+		id = new String(new char[3 - id.length()]).replace('\0', '0') + id;
+		try {
+			// URL para la consulta a la API
+			URL url = new URL("https://www.zaragoza.es/sede/servicio/urbanismo-infraestructuras/estacion-bicicleta/" + id
+					+ ".json?fl=bicisDisponibles&rf=html&srsname=wgs84");
+			// Realizamos la consulta
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.connect();
+			String res = "";
+			Scanner scanner = new Scanner(url.openStream());
+			while (scanner.hasNext()) {
+		       res += scanner.nextLine();
+		    }
+			
+			// Parseamos la respuesta JSON obtenida
+			JSONObject nBicis = new JSONObject(res);
+			scanner.close();
+			return nBicis.getInt("bicisDisponibles");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return 0;
+	}
+
+	
+	// Añade una estacion bizi a la base de datos
 	public void anyadir(biziVO estacion) throws SQLException {
 		Connection conn = null;
 
@@ -133,45 +147,6 @@ public class biziDAO {
 		} finally {
 			PoolConnectionManager.releaseConnection(conn);
 		}
-	}
-
-	// Dado número de estacion, obtenemos de la API el número de bicis disponibles
-	public int getNumeroBicis(int estacion) {
-		String id = "" + estacion;
-		id = new String(new char[3 - id.length()]).replace('\0', '0') + id;
-		try {
-			URL url = new URL("https://www.zaragoza.es/sede/servicio/urbanismo-infraestructuras/estacion-bicicleta/" + id
-					+ ".json?fl=bicisDisponibles&rf=html&srsname=wgs84");
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
-			conn.connect();
-			String res = "";
-			Scanner scanner = new Scanner(url.openStream());
-			while (scanner.hasNext()) {
-		       res += scanner.nextLine();
-		    }
-			JSONObject nBicis = new JSONObject(res);
-			scanner.close();
-			return nBicis.getInt("bicisDisponibles");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		/*
-		// Consulta a realizar a la API
-		String consultaAPI = "https://www.zaragoza.es/sede/servicio/urbanismo-infraestructuras/estacion-bicicleta/" + id
-				+ "?fl=bicisDisponibles&rf=html&srsname=wgs84";
-		// Creamos el cliente para la conexión a la API
-		Client client = ClientBuilder.newClient();
-		WebTarget target = client.target(consultaAPI);
-
-		// Lanzamos la consulta
-		String respuesta = target.request(MediaType.APPLICATION_JSON).get(String.class);
-
-		JSONObject nBicis = new JSONObject(respuesta);
-		return nBicis.getInt("bicisDisponibles");*/
-		return 0;
 	}
 }
 

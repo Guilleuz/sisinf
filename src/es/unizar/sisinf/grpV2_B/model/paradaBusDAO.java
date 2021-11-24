@@ -9,6 +9,7 @@ import java.util.List;
 
 import es.unizar.sisinf.grpV2_B.db.PoolConnectionManager;
 
+// Clase DAO para las paradas de autobús
 public class paradaBusDAO {
 
 	private static String insert = "INSERT INTO BusStation(id,direction, lat, long) VALUES(?,?,?,?)";
@@ -23,8 +24,8 @@ public class paradaBusDAO {
 		paradaBusVO parada = null;
 
 		try {
-
 			conn = PoolConnectionManager.getConnection();
+			// Obtenemos los datos de la parada de la DB
 			PreparedStatement st = conn.prepareStatement(findById);
 			st.setInt(1, id);
 			ResultSet rs = st.executeQuery();
@@ -46,7 +47,7 @@ public class paradaBusDAO {
 
 	}
 
-    // devuelve una lista de paradas de bus
+    // Devuelve una lista de paradas de bus
 	public List<paradaBusVO> listar() throws SQLException {
 
 		List<paradaBusVO> listaParadas = new LinkedList<paradaBusVO>();
@@ -54,8 +55,8 @@ public class paradaBusDAO {
 
 		try {
 			conn = PoolConnectionManager.getConnection();
+			// Obtenemos el listado de paradas de la DB
 			PreparedStatement st = conn.prepareStatement(list);
-
 			ResultSet rs = st.executeQuery();
 
 			while (rs.next()) {
@@ -78,12 +79,40 @@ public class paradaBusDAO {
 		return listaParadas;
 	}
 
-    // añade una parada de bus a la base de datos
+	// Devuelve true si la parada existe en la base de datos, false en caso contrario
+	public boolean existeParada(int id) throws SQLException {
+		Connection conn = null;
+
+		try {
+			conn = PoolConnectionManager.getConnection();
+			// Consultamos la DB para comprobar si aparece la parada
+			PreparedStatement st = conn.prepareStatement(existePoste);
+			st.setInt(1, id);
+			ResultSet rs = st.executeQuery();
+			rs.next();
+			int total = rs.getInt("total");
+			rs.close();
+			st.close();
+			
+			return total > 0;
+
+		} catch (SQLException se) {
+			se.printStackTrace();
+
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+		} finally {
+			PoolConnectionManager.releaseConnection(conn);
+		}
+		
+		return false;
+	}
+	
+    // Añade una parada de bus a la base de datos
 	public void anyadir(paradaBusVO parada) throws SQLException {
 		Connection conn = null;
 
 		try {
-
 			conn = PoolConnectionManager.getConnection();
 			PreparedStatement st = conn.prepareStatement(insert);
 
@@ -105,31 +134,5 @@ public class paradaBusDAO {
 		}
 	}
 	
-	public boolean existeParada(int id) throws SQLException {
-		Connection conn = null;
-
-		try {
-
-			conn = PoolConnectionManager.getConnection();
-			PreparedStatement st = conn.prepareStatement(existePoste);
-			st.setInt(1, id);
-			ResultSet rs = st.executeQuery();
-			rs.next();
-			int total = rs.getInt("total");
-			rs.close();
-			st.close();
-			
-			return total == 1;
-
-		} catch (SQLException se) {
-			se.printStackTrace();
-
-		} catch (Exception e) {
-			e.printStackTrace(System.err);
-		} finally {
-			PoolConnectionManager.releaseConnection(conn);
-		}
-		
-		return false;
-	} 
+	 
 }

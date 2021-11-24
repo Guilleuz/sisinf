@@ -24,12 +24,15 @@ public class servletMenuBizi extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Obtenemos el listado de todas las estaciones Bizi
         List<biziVO> listaEstaciones = new LinkedList<biziVO>();
         try {
 			listaEstaciones = new biziDAO().listar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+        
+        // Mostraremos dicho listado en mostrarMenuBizi.jsp
         request.setAttribute("lista", listaEstaciones);
         request.getRequestDispatcher("mostrarMenuBizi.jsp").forward(request, response);
     }

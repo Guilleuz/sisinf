@@ -1,5 +1,6 @@
 package es.unizar.sisinf.grpV2_B.model;
 
+// Clase VO para las llegadas de autobus
 public class llegadaAutobusVO {
     private int parada;
     private String linea;

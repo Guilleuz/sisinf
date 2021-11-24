@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import es.unizar.sisinf.grpV2_B.db.PoolConnectionManager;
 
+// Clase DAO para la gestión de usuarios
 public class usuarioDAO {
 	private static String countByUserName = "SELECT count(*) cuenta FROM Usuario WHERE name = ?";
 	private static String findByUserName = "SELECT * FROM Usuario WHERE name = ?";

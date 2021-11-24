@@ -2,6 +2,7 @@ package es.unizar.sisinf.grpV2_B.model;
 
 import org.postgis.*;
 
+// Clase VO para las paradas de tranvía
 public class paradaTranviaVO extends estacion {
 	private String nombre;
 	private String sentido;

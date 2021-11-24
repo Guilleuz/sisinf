@@ -20,18 +20,17 @@ public class servletMenuTranvia extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        paradaTranviaDAO tranvia = new paradaTranviaDAO();
-        
+        paradaTranviaDAO tranvia = new paradaTranviaDAO();  
         List<String> sentidos = new LinkedList<String>();
         List<paradaTranviaVO> sentido1 = new LinkedList<paradaTranviaVO>();
         List<paradaTranviaVO> sentido2 = new LinkedList<paradaTranviaVO>();
         
         try {
-        	 sentidos = tranvia.listarSentidos();
-             sentido1 = tranvia.listarOrdenada(sentidos.get(0));
-             sentido2 = tranvia.listarOrdenada(sentidos.get(1));
+			// Obtenemos los sentidos, y la lista de paradas por cada sentido
+			sentidos = tranvia.listarSentidos();
+			sentido1 = tranvia.listarOrdenada(sentidos.get(0));
+			sentido2 = tranvia.listarOrdenada(sentidos.get(1));
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         
@@ -45,6 +44,7 @@ public class servletMenuTranvia extends HttpServlet {
 			paradasS2.add(i.getNombre());
 		}
 		
+		// Mostramos la información de paradas y sentidos en mostrarMenuTranvia.jsp
         request.setAttribute("sentidos", sentidos);
         request.setAttribute("sentido1", paradasS1);
         request.setAttribute("sentido2", paradasS2);

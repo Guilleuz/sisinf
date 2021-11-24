@@ -2,6 +2,7 @@ package es.unizar.sisinf.grpV2_B.model;
 
 import org.postgis.*;
 
+// Clase VO para las estaciones Bizi
 public class biziVO extends estacion {
     private int capacidad;
     private int nBicicletas;

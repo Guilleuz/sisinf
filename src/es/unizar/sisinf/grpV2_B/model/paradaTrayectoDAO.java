@@ -9,20 +9,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import es.unizar.sisinf.grpV2_B.db.PoolConnectionManager;
 
+// Clase DAO para las paradas en un trayecto de autobús
 public class paradaTrayectoDAO {
 
 	private static String insertar = "INSERT INTO BusRoute (busStop, line, orden) VALUES(?,?,?)";
 	private static String lista = "SELECT * FROM BusRoute WHERE line=? ORDER BY orden ASC";
 
 	// Obtener un listado de todas las paradas a partir de un id de linea
-	// (ordenadas)
 	public List<paradaTrayectoVO> listarParadas(int id) throws SQLException {
 		List<paradaTrayectoVO> listaParadas = new LinkedList<paradaTrayectoVO>();
 		Connection conn = null;
 
 		try {
 			conn = PoolConnectionManager.getConnection();
-
+			// Obtenemos el listado de paradas de la DB
 			PreparedStatement lsParadas = conn.prepareStatement(lista);
 			lsParadas.setInt(1, id);
 			ResultSet rs = lsParadas.executeQuery();
@@ -47,7 +47,7 @@ public class paradaTrayectoDAO {
 		return listaParadas;
 	}
 
-	// Añadir, con nPoste, id linea y orden
+	// Añadimos una parada en el trayecto
 	public void anyadir(paradaTrayectoVO parada) throws SQLException {
 		Connection conn = null;
 

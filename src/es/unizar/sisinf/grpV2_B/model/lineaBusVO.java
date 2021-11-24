@@ -1,5 +1,6 @@
 package es.unizar.sisinf.grpV2_B.model;
 
+// Clase VO para las líneas de autobús
 public class lineaBusVO{
     private int id;
     private String nombre;

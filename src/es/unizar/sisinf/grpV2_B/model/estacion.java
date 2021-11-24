@@ -2,6 +2,7 @@ package es.unizar.sisinf.grpV2_B.model;
 
 import org.postgis.*;
 
+// Clase estación, de la que heredarán el resto de estaciones o paradas
 public class estacion {
     protected int id;
     protected String direccion;

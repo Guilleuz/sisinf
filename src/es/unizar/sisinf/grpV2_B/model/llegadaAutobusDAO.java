@@ -13,15 +13,16 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
+//Clase DAO para las llegadas de autobus
 public class llegadaAutobusDAO {
 
 	// Dado un nPoste devolvemos un listado de llegadas
 	public List<llegadaAutobusVO> getLlegadas(int nPoste) {
 		List<llegadaAutobusVO> lista = new ArrayList<llegadaAutobusVO>();
 
-		// Consulta a realizar a la API
 		URL url;
 		try {
+			// Consulta a realizar a la API
 			url = new URL ("https://www.zaragoza.es/sede/servicio/urbanismo-infraestructuras/transporte-urbano/"
 					+ "poste-autobus/tuzsa-" + nPoste + ".json?fl=destinos&rf=html&srsname=wgs84");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -51,11 +52,9 @@ public class llegadaAutobusDAO {
 			return lista;
 		
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-
 		return lista;
 	}
 }

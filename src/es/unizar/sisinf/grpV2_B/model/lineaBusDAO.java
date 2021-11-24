@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import es.unizar.sisinf.grpV2_B.db.PoolConnectionManager;
 
+//Clase DAO para las líneas de autobús
 public class lineaBusDAO {
 
 	private static String insert = "INSERT INTO BusLine(id, name, way) VALUES(?,?,?)";
@@ -14,15 +15,15 @@ public class lineaBusDAO {
 	private static String listWays = "SELECT way FROM BusLine WHERE name=?";
 	private static String listarNombres = "SELECT DISTINCT name FROM BusLine ORDER BY name";
 
-	// devuelve lista de lineas de autobus
+	// Devuelve el listado de las lineas de autobus
 	public List<lineaBusVO> obtenerListado() throws SQLException {
 		List<lineaBusVO> listaLineas = new LinkedList<lineaBusVO>();
 		Connection conn = null;
 
 		try {
+			// Consultamos la DB para obtener las lineas
 			conn = PoolConnectionManager.getConnection();
 			PreparedStatement st = conn.prepareStatement(list);
-
 			ResultSet rs = st.executeQuery();
 
 			while (rs.next()) {
@@ -51,7 +52,7 @@ public class lineaBusDAO {
 
 		try {
 			conn = PoolConnectionManager.getConnection();
-			
+			// Consultamos la DB para obtener los nombres de línea
 			PreparedStatement st = conn.prepareStatement(listarNombres);
 			ResultSet rs = st.executeQuery();
 
@@ -73,14 +74,14 @@ public class lineaBusDAO {
 		return lista;
 	}
 	
-	// devuelve lista de setidos segun una linea
+	// Devuelve una lista de setidos según una línea
 	public List<String> obtenerSentidos(String nombre) throws SQLException {
 		List<String> lista = new LinkedList<String>();
 		Connection conn = null;
 
 		try {
 			conn = PoolConnectionManager.getConnection();
-			
+			// Consultamos la DB para obtener los sentidos de la línea
 			PreparedStatement st = conn.prepareStatement(listWays);
 			st.setString(1, nombre);
 			ResultSet rs = st.executeQuery();
@@ -104,14 +105,14 @@ public class lineaBusDAO {
 
 	}
 
-	// devuelve una linea segun un nombre y sentido dado
+	// Devuelve una linea segun un nombre y sentido dado
 	public lineaBusVO obtenerLinea(String nombre, String sentido) throws SQLException {
 
 		Connection conn = null;
 		lineaBusVO linea = null;
 		try {
 			conn = PoolConnectionManager.getConnection();
-			
+			// Consultamos la DB para obtener la información de la línea, según nombre y sentido
 			PreparedStatement st = conn.prepareStatement(findByNameAndWay);
 			st.setString(1, nombre);
 			st.setString(2, sentido);
@@ -134,7 +135,7 @@ public class lineaBusDAO {
 
 	}
 
-	// devuelve una linea dado el id
+	// Devuelve una linea dado el id
 	public lineaBusVO obtenerLineaId(int id) {
 
 		Connection conn = null;
@@ -142,7 +143,7 @@ public class lineaBusDAO {
 		try {
 
 			conn = PoolConnectionManager.getConnection();
-			
+			// Consultamos la DB para obtener la información de la línea, según su id
 			PreparedStatement st = conn.prepareStatement(findById);
 			st.setString(1, Integer.toString(id));
 			ResultSet rs = st.executeQuery();
@@ -162,7 +163,7 @@ public class lineaBusDAO {
 		return linea;
 	}
 
-	// añade una nueva linea de
+	// Añade una nueva linea de autobús
 	public void anyadir(lineaBusVO linea) {
 		Connection conn = null;
 		try {

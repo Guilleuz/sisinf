@@ -7,25 +7,44 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Lista Paradas tranvia</title>
+<title>Menú Tranvía</title>
 
 <script src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
 <script>
 $(function() {
+	botonEnvio.disabled = true;
     $(".forms").hide();
+    let sent1 = document.getElementById("myselect1");
+    let sent2 = document.getElementById("myselect2");
     $("#seleccionarSentido").change(function() {
         switch($(this).val()){ 
             case "${sentidos.get(0)}":
             		$("#seleccionParadaOculto").hide();
                 $(".forms").hide().parent().find("#sentido1").show();
-                (".forms").parent().find("#sentido2").hide();
+                $(".forms").parent().find("#sentido2").hide();
+                if (sent1.value != "none") {
+                	botonEnvio.disabled = false;
+                } else {
+                	botonEnvio.disabled = true;
+                }
                 break;
             case "${sentidos.get(1)}":
             		$("#seleccionParadaOculto").hide();
                 $(".forms").hide().parent().find("#sentido2").show();
                 $(".forms").parent().find("#sentido1").hide();
+                if (sent2.value != "none") {
+                	botonEnvio.disabled = false;
+                } else {
+                	botonEnvio.disabled = true;
+                }
                 break;
         }
+    });
+    $("#myselect1").change(function() {
+    	botonEnvio.disabled = false;
+    });
+    $("#myselect2").change(function() {
+    	botonEnvio.disabled = false;
     });
 });
 </script>
@@ -72,7 +91,7 @@ $(function() {
             </select> </div>
 
         <br/><br/>          
-        <input type="submit" value="Elegir"/>
+        <input id="botonEnvio" type="submit" value="Elegir"/>
     </form>
 </body>
 </html>

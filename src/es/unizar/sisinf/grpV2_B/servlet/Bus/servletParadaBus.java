@@ -21,6 +21,7 @@ public class servletParadaBus extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Dado un id de parada, obtenemos su información
 		int id = 0;
     	try {
         	id = Integer.valueOf(request.getParameter("id"));
@@ -32,16 +33,15 @@ public class servletParadaBus extends HttpServlet {
         paradaBusVO bus = null;
 		List<llegadaAutobusVO> llegada = new LinkedList<llegadaAutobusVO>();
 		try{
+			// Consultamos la API para obtener las llegadas de autobuses a la parada
         	bus = new paradaBusDAO().obtenerParada(id);
         	llegada = new llegadaAutobusDAO().getLlegadas(id);
-        	//llegada.add(new llegadaAutobusVO(bus.getNPoste(), "C1", "Gran Casa", "1 minuto", "6 minutos"));
-			//llegada.add(new llegadaAutobusVO(bus.getNPoste(), "C2", "Gran Caso", "2 minutos", "23 minutos"));
         }
         catch (SQLException e){
         	e.printStackTrace();
         }
 
-
+		// Mostramos la información de la parada y las llegadas en mostrarParadaBus,jsp
 		request.setAttribute("bus", bus);
 		request.setAttribute("llegadas", llegada);
         request.getRequestDispatcher("mostrarParadaBus.jsp").forward(request, response);

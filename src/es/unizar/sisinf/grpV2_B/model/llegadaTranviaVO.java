@@ -1,5 +1,6 @@
 package es.unizar.sisinf.grpV2_B.model;
 
+// Clase VO para las llegadas de tranvías
 public class llegadaTranviaVO {
     private int parada;
     private String primero;

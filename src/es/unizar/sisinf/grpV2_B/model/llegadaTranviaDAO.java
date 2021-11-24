@@ -15,14 +15,15 @@ import javax.ws.rs.core.MediaType;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+//Clase DAO para las llegadas de tranvías
 public class llegadaTranviaDAO {
 
 	// Dado el id de la parada, devuelve los tiempos de llegada
 	public llegadaTranviaVO getLlegadas(int parada) {
 
-		// Consulta a realizar a la API
 		URL url;
 		try {
+			// Consulta a realizar a la API
 			url = new URL("https://www.zaragoza.es/sede/servicio/urbanismo-infraestructuras/transporte-urbano/parada-tranvia/"
 					+ parada + ".json?fl=destinos&rf=html&srsname=wgs84");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -57,7 +58,6 @@ public class llegadaTranviaDAO {
 
 			return new llegadaTranviaVO(parada, primero, segundo);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

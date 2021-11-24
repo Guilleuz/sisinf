@@ -17,7 +17,9 @@ public class datosEstacion extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id = 0;
+        // A partir del id de una estación Bizi, consultamos la DB y la API
+    	// para recuperar sus datos
+    	int id = 0;
     	try {
         	id = Integer.valueOf(request.getParameter("id"));
         }
@@ -34,6 +36,7 @@ public class datosEstacion extends HttpServlet {
         	e.printStackTrace();
         }
         
+        // Mostraremos los datos de la estación en mostrarDatos.jsp
         request.setAttribute("estacion", estacion);
         request.getRequestDispatcher("mostrarDatos.jsp").forward(request, response);
     }

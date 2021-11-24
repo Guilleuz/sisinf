@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Menú Autobús</title>
 
 
 <script src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
@@ -14,6 +14,9 @@ $(function() {
     $(".forms").hide();
 	let data = '${sentidosLinea}'
 	let json = JSON.parse(data);
+	botonEnvio.disabled = true;
+	let sel = document.getElementById("seleccionarSentido");
+	let to_hide = sel[2];
 	$("#seleccionarLinea").change(function() {
 		let linea = $(this).val();
 		let s1 = json[linea][0];
@@ -25,7 +28,17 @@ $(function() {
         document.getElementById('sentido2').innerHTML = s2;
         $("#seleccionarSentidoDivOculto").hide();
         $(".forms").hide().parent().find("#seleccionarSentidoDiv").show();
+        if (sel.value != "none") {
+        	botonEnvio.disabled = false;
+        }
+        if (s1 == s2 || s2 == "Sentido único") {
+        	to_hide.setAttribute('hidden', 'hidden');
+        }
+        else to_hide.removeAttribute('hidden');
     });
+	$("#seleccionarSentido").change(function() {
+		botonEnvio.disabled = false;
+	});
 });
 </script>
 
@@ -79,7 +92,7 @@ $(function() {
            </select> </div>
 
         <br/><br/>          
-        <input type="submit" value="Elegir"/>
+        <input id="botonEnvio" type="submit" value="Elegir"/>
     </form>
 
 </body>
