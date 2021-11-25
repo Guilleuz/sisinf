@@ -10,6 +10,7 @@ import es.unizar.sisinf.grpV2_B.db.PoolConnectionManager;
 public class usuarioDAO {
 	private static String countByUserName = "SELECT count(*) cuenta FROM Usuario WHERE name = ?";
 	private static String findByUserName = "SELECT * FROM Usuario WHERE name = ?";
+	private static String insertar = "insert into Usuario (name, password) values (?, ?)";
 
 	public int validateUser(usuarioVO user) {
 		int result = 0;
@@ -59,5 +60,28 @@ public class usuarioDAO {
 		}
 
 		return result;
+	}
+	
+	public void anyadir(usuarioVO user) {
+		Connection conn = null;
+
+		try {
+			conn = PoolConnectionManager.getConnection();
+			
+			PreparedStatement addEst = conn.prepareStatement(insertar);
+			addEst.setString(1, user.getNombreUsuario());
+			addEst.setString(2, user.getPassword());
+
+			addEst.executeUpdate();
+			addEst.close();
+
+		} catch (SQLException se) {
+			se.printStackTrace();
+
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+		} finally {
+			PoolConnectionManager.releaseConnection(conn);
+		}
 	}
 }

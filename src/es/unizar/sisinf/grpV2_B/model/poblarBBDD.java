@@ -41,6 +41,9 @@ public class poblarBBDD extends HttpServlet {
 		
 		URL url;
 		try {	
+			// Usuario admin
+			new usuarioDAO().anyadir(new usuarioVO("admin", "admin"));;
+			
 			// Paradas de autobús
 			// URL de la consulta a la API
 			url = new URL ("https://www.zaragoza.es/sede/servicio/urbanismo-infraestructuras/transporte-urbano/poste-autobus.json"
