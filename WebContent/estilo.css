@@ -1,39 +1,50 @@
 @charset "UTF-8";
+ ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #ff2222;
+}
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    background-color: #ff2222;
-  }
-  
+li {
+  float: left;
+  border-right:1px solid #bbb;
+}
+
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: white;
+  color: black;
+}
+
+.active {
+  background-color: #04AA6D;
+}
+
   .topnav {
-      background-color: #333;
+      background-color: red; 
       overflow: hidden;
       padding: 30px 4%;
-      padding-top: 12px;
+      padding-top: 10%;
       padding-bottom: 5px;
-      background-color: #ff2222;
-      
+      border-bottom-style: solid;
+      border-width: 5px;
+      border-color: #ffffff;
+      max-height: 10%;
+      padding-top: 10px;
   }
 
-img.imagenBizi {
-      padding-top: 30px;
-}
-img.logo {
-    width: 10%;
-}
-img {
-  width: 20%;
-}
- 
-.linea {
-  padding: 0.5px;
-  background-color: #ffffff;
-}
-
 .button_iniciarSesion {
-    
+    margin-top:auto;
     width: 10%;
     min-width: 150px;
     height: 100%;
@@ -50,42 +61,29 @@ img {
     border-color:  #ffffff;
     border-width: 3px;
     border-radius: 50px;
+    border-top: 50%;
     
     cursor: pointer;
     transition: background-color 0.3s ease 0s;
   }
   
-  .button_iniciarSesion:hover {
-     background-color: #FFFFFF;
-     color: #000000;
-  }
-  
-  .inicio {
+.button_iniciarSesion:hover {
+   background-color: #FFFFFF;
+   color: #000000;
+}
+
+img.logo {
+    width: 10%;
+}
+.centrar{
+    margin-top: auto;
     position: absolute;
-    top: 50%;
+    top: 55%;
     left: 50%;
-    transform: translate(-50%,-50%);
-    max-width: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
     text-align: center;
-    height: 50%;
-    width: 50%;
-    
-  }
-
-body, html {
-  height: 100%;
 }
 
-.inicio2 {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-}
- 
-  
-  .imagenTranvia:hover {
-    cursor:pointer;
-  }
   

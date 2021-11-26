@@ -5,11 +5,13 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="menuBizi.css" media="screen">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Lista Estaciones Bizis</title>
 </head>
 <body>
     <h1>Menú Bizi</h1>
+    <div class="centrar">
     <form action="/sisinf/estacionBizi" method="get">
         <select name="id">
         <option value="none" selected disabled hidden>
@@ -24,6 +26,7 @@
         <br/><br/>          
         <input type="submit" value="Elegir"/>
     </form>
+    </div>
 </body>
 </html>
 
