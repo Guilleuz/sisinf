@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Lista Estaciones Bizis</title>
+<title>Parada de Tranvía</title>
 </head>
 <body>
     <p>

@@ -7,13 +7,25 @@
 <head>
 <link rel="stylesheet" type="text/css" href="menuBizi.css" media="screen">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Lista Estaciones Bizis</title>
+<title>Menú Bizi</title>
+<script src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+<script>
+$(function() {
+	botonEnvio.disabled = true;
+    $("#seleccionarEstacion").change(function() {
+    	console.log($(this).val);
+    	if ($(this).val = "none") {
+    		botonEnvio.disabled = false;
+    	}
+    });
+});
+</script>
 </head>
 <body>
     <h1>Menú Bizi</h1>
     <div class="centrar">
     <form action="/sisinf/estacionBizi" method="get">
-        <select name="id">
+        <select id="seleccionarEstacion"name="id">
         <option value="none" selected disabled hidden>
                      Seleccione Estacion
                  </option>
@@ -24,7 +36,7 @@
             </c:forEach>
         </select>
         <br/><br/>          
-        <input type="submit" value="Elegir"/>
+        <input id="botonEnvio" type="submit" value="Elegir"/>
     </form>
     </div>
 </body>

@@ -30,38 +30,96 @@
 
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Menu Ztreet</title>
+<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
+<style>
+body {
+    font-family: 'Raleway';font-size: 22px;
+}
 
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: red;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  border-color: white;
+  border-width: 0px;
+  border-right-style: solid;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: white;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: black;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+  
+</style>
 <link rel="stylesheet" type="text/css" href="estilo.css" media="screen">
-
-<div class="topnav">
-            <img class="logo" src="https://i.ibb.co/tZ2WH8p/logo2.png" alt="logo">
-    <div style="padding-top:5%;border-style: solid solid solid solid;border-color:black;float:right">
-	    <div class="button_iniciarSesion">
-	       <a> Iniciar Sesion</a>
-	     </div>  
-    </div>  
-</div>
-<ul>
- <li><a>Autobus</a></li>
- <li><a>Tranvia</a></li>
- <li><a>Bizi</a></li>
- <li style="float:right;"><a>Iniciar Sesion</a></li>
- 
-</ul>
 </head>
 <body>
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("mySidenav").style.borderWidth = "3px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("mySidenav").style.borderWidth = "0px";
+}
+</script>
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="/sisinf/menuBus">Autobús</a>
+  <a href="/sisinf/menuTranvia">Tranvía</a>
+  <a href="/sisinf/menuBizi">Bizi</a>
+  <a href="iniciarSesion.jsp">Iniciar Sesión</a>
+</div>
+<div class="topnav">
+ <img class="logo" src="https://i.ibb.co/tZ2WH8p/logo2.png" alt="logo">
+</div>
+<div class="navbar">
+ <span style="font-size:30px;cursor:pointer;float:left;" onclick="openNav()">&#9776;</span>
+ <a style="width: 60%;margin: auto;text-align: center;"><!--  <img class="logo" src="https://i.ibb.co/tZ2WH8p/logo2.png" alt="logo">-->prueba</a>
+ <a style="float:right;">Iniciar Sesion</a>
+</div>
 
 <!-- Iconos de acceso a menu -->
- <div class="centrar" style="background-color:red;">
-
-        <p>
-            <a href="/sisinf/menuBizi"><img class="imagenBizi"  src="https://i.ibb.co/WDw18by/icono-bici-png.png"> </a>
-            <a href="/sisinf/menuBus"><img class="imagenBus" src="https://i.ibb.co/KDTFDDv/icono-bus-png.png"></a>
-            <a href="/sisinf/menuTranvia"><img class="imagenTranvia" src="https://i.ibb.co/nrDkHLQ/icono-tranvia-png.png"></a>
-              
-        </p>
-  </div>
-
+ <div class="centrar">
+  <p>
+   <a href="/sisinf/menuBizi"><img class="imagenBizi"  src="https://i.ibb.co/WDw18by/icono-bici-png.png"> </a>
+   <a href="/sisinf/menuBus"><img class="imagenBus" src="https://i.ibb.co/KDTFDDv/icono-bus-png.png"></a>
+   <a href="/sisinf/menuTranvia"><img class="imagenTranvia" src="https://i.ibb.co/nrDkHLQ/icono-tranvia-png.png"></a>             
+  </p>
+ </div>
 </body>
 
 
