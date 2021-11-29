@@ -1,12 +1,29 @@
-input[type=button], input[type=submit], input[type=reset] {
-  background-color: red;
+/*input[type=button], input[type=submit], input[type=reset] {
+  background-color: #ff2222;
   border: none;
   color: white;
   padding: 16px 32px;
   text-decoration: none;
   margin: 4px 2px;
   cursor: pointer;
+  border-radius: 10px;
 }
+
+input:hover {
+  border: 3px #4d4848 solid;
+  background-color: white;
+  color: black;
+}
+
+
+input:disabled,
+input[disabled]{
+  cursor:not-allowed;
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
 select {
   width: 100%;
   padding: 16px 20px;
@@ -35,11 +52,6 @@ background-size: cover;
   -webkit-background-size: cover;
 -moz-background-size: cover;
 -o-background-size: cover;
-   background-image: 
-    linear-gradient(
-      rgba(0, 0, 0, 0.25),
-      rgba(0, 0, 0, 0.25)
-    ),
-    url(https://images.unsplash.com/photo-1559348349-86f1f65817fe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80);
-}
+  
+}*/
   

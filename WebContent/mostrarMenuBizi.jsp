@@ -5,9 +5,32 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="menuBizi.css" media="screen">
+<link rel="stylesheet" type="text/css" href="estilo.css" media="screen">
+<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
+<link href="https://fonts.googleapis.com/css2?family=Jockey+One&display=swap" rel="stylesheet">
+<style>
+body {
+     background-image: 
+    linear-gradient(
+      rgba(0, 0, 0, 0.25),
+      rgba(0, 0, 0, 0.25)
+    ),
+    url(https://images.unsplash.com/photo-1559348349-86f1f65817fe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80);
+}
+</style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Menú Bizi</title>
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("mySidenav").style.borderWidth = "1px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("mySidenav").style.borderWidth = "0px";
+}
+</script>
 <script src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
 <script>
 $(function() {
@@ -22,7 +45,19 @@ $(function() {
 </script>
 </head>
 <body>
-    <h1>Menú Bizi</h1>
+    <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="/sisinf/menuBus">Autobús</a>
+    <a href="/sisinf/menuTranvia">Tranvía</a>
+    <a href="/sisinf/menuBizi">Bizi</a>
+    <a href="iniciarSesion.jsp">Iniciar Sesión</a>
+    </div>
+
+    <div class="navbar">
+    <span style="padding-top: 7px;width:20%;font-size:30px;cursor:pointer;float:left;color: white" onclick="openNav()">&nbsp&nbsp&#9776;</span>
+    <a href="index.html" style="font-family: 'Jockey One', sans-serif;text-decoration:none;width: 60%;margin: 0 auto;text-align: center;float: left;font-size: 40px;font-weight: bold;color: white">ZTREET</a>
+    </div>
+
     <div class="centrar">
     <form action="/sisinf/estacionBizi" method="get">
         <select id="seleccionarEstacion"name="id">
