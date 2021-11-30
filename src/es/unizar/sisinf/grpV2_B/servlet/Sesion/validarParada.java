@@ -37,9 +37,20 @@ public class validarParada extends HttpServlet {
             request.setAttribute("latitud", lat);
             request.setAttribute("longitud", lon);
             
+            
+            boolean hayError = false;
             // Comprobamos si alguno de los campos del formulario es vacio
-            if (poste == "" || dir == "" || lat == "" || lon == "" || poste == null || dir == null || lat == null || lon == null) {
-            	request.setAttribute("error", "Campos vacíos");
+            if (poste == "" || poste == null) {
+            	request.setAttribute("errorPoste", "Campo obligatorio");
+            	hayError = true;
+            }
+            
+            if (dir == "" || dir == null) {
+            	request.setAttribute("errorDir", "Campo obligatorio");
+            	hayError = true;
+            }
+            
+            if (hayError) {
             	request.getRequestDispatcher("introducirParada.jsp").forward(request, response);
             }
             else {
@@ -53,7 +64,7 @@ public class validarParada extends HttpServlet {
 	            paradaBusDAO bus = new paradaBusDAO();
 	            // Comprobamos si la parada ya existe en la DB
 				if(bus.existeParada(posteInt)) {
-					request.setAttribute("error", "Numero de poste ya existente");
+					request.setAttribute("errorPoste", "Numero de poste ya existente");
 					request.getRequestDispatcher("introducirParada.jsp").forward(request, response);
 				}
 				else {

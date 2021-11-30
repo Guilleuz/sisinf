@@ -37,38 +37,34 @@ public class introducirParada extends HttpServlet {
 			if(usuario == null || (usuario.trim().equals(""))) errors.put("usuario", "Campo Obligatorio");
 			if(pass == null || (pass.trim().equals(""))) errors.put("pass", "Campo Obligatorio");
 			
+			// Comprobamos si el nombre de usuario y la contraseña son correctas
+			usuarioVO user = new usuarioVO(usuario, pass);
+			int result = new usuarioDAO().validateUser(user);
+			switch(result) {
+				case 0:
+					// Datos correctos
+					sesion.setAttribute("usuario", usuario);
+					break;
+				case 1:
+					// Usuario no existe
+					if (!usuario.trim().equals(""))
+						errors.put("usuario", "El usuario no existe");
+					break;
+				case 2:
+					// Contraseña incorrecta
+					errors.put("pass", "Contraseña incorrecta");
+					break;
+			}
 			if(!errors.isEmpty()) {
 				// Redireccion con errores al jsp
 				request.setAttribute("errores", errors);
+				request.setAttribute("userName", usuario);
 				request.getRequestDispatcher("iniciarSesion.jsp").forward(request, response);
 			}
 			else {
-				// Comprobamos si el nombre de usuario y la contraseña son correctas
-				usuarioVO user = new usuarioVO(usuario, pass);
-				int result = new usuarioDAO().validateUser(user);
-				switch(result) {
-					case 0:
-						// Datos correctos
-						sesion.setAttribute("usuario", usuario);
-						break;
-					case 1:
-						// Usuario no existe
-						errors.put("usuario", "El usuario no existe");
-						break;
-					case 2:
-						// Contraseña incorrecta
-						errors.put("pass", "Contraseña incorrecta");
-						break;
-				}
-				if(!errors.isEmpty()) {
-					// Redireccion con errores al jsp
-					request.setAttribute("errores", errors);
-					request.getRequestDispatcher("iniciarSesion.jsp").forward(request, response);
-				}
-				else {
-					request.getRequestDispatcher("introducirParada.jsp").forward(request, response);
-				}
+				request.getRequestDispatcher("introducirParada.jsp").forward(request, response);
 			}
+		
 			
 		} else {
 			// Si ha iniciado sesión, redirigimos directamente a introducirParada.jsp

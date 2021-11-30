@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+ pageEncoding="UTF-8" import = "java.util.Map"%>
 <!--  <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +16,7 @@
 <a href="/sisinf/menuBizi">Bizi</a>
 <a href="/sisinf/menuBus">Autobus</a>
 <a href="/sisinf/menuTranvia">Tranvia</a>
-<a href="iniciarSesion.jsp">Iniciar sesión</a> 
+<a href="iniciarSesion.jsp">Iniciar sesiÃ³n</a> 
 <a href="/sisinf/poblarDB">Poblar</a>
     
 
@@ -25,6 +27,7 @@
 </html>
 
 -->
+
 <!DOCTYPE html>
 <html>
 
@@ -45,9 +48,6 @@ body {
     url(https://images2.alphacoders.com/545/thumb-1920-545232.jpg);
 } 
 </style>
-
-</head>
-<body>
 <script>
 function openNav() {
   document.getElementById("mySidenav").style.width = "250px";
@@ -59,17 +59,27 @@ function closeNav() {
   document.getElementById("mySidenav").style.borderWidth = "0px";
 }
 </script>
+</head>
+<body>
+
+<%
+HttpSession sesion = request.getSession();
+String opcion = "Iniciar Sesión";
+if (session.getAttribute("usuario") != null) {
+	// Sesión ya iniciada, la opción será introducir parada
+	opcion = "Introducir Parada";
+}%>
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
   <a href="/sisinf/menuBus">Autobús</a>
-  <a href="/sisinf/menuTranvia">Tranvía</a>
+  <a href="/sisinf/menuTranvia">Tranví­a</a>
   <a href="/sisinf/menuBizi">Bizi</a>
-  <a href="iniciarSesion.jsp">Iniciar Sesión</a>
+  <a href="iniciarSesion.jsp"><%= opcion%></a>
 </div>
 
 <div class="navbar">
  <span style="padding-top: 7px;width:20%;font-size:30px;cursor:pointer;float:left;color: white" onclick="openNav()">&nbsp&nbsp&#9776;</span>
- <a href="index.html" style="font-family: 'Jockey One', sans-serif;text-decoration:none;width: 60%;margin: 0 auto;text-align: center;float: left;font-size: 40px;font-weight: bold;color: white">ZTREET</a>
+ <a href="index.jsp" style="font-family: 'Jockey One', sans-serif;text-decoration:none;width: 60%;margin: 0 auto;text-align: center;float: left;font-size: 40px;font-weight: bold;color: white">ZTREET</a>
 </div>
 
 <!-- Iconos de acceso a menu -->
