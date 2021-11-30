@@ -98,13 +98,13 @@ if (session.getAttribute("usuario") != null) {
 		poste = (String) request.getAttribute("poste");
 	}
 	%>
-	<div class="centrar">
+	<div class="centrar caja">
 	<h3>Búsqueda por Poste</h3>
 	<form action="/sisinf/validarPoste" method"get">
 		<input style="width: 60%;"type="text" name="id" id="campoID" value="<%= poste%>" placeholder="Número de poste"/>
 		<input type="submit" value="Buscar">
 	</form>
-	<span style="color: white;font-weight: bold"><%= msjError%></span>
+	<span class="textoError"><%= msjError%></span>
     <br>
      
      <h3>Búsqueda por Línea</h3>
@@ -136,7 +136,7 @@ if (session.getAttribute("usuario") != null) {
             <option id="sentido2" value=""></option>
            </select> </div>
 
-        <br/><br/>          
+        <br/>       
         <input id="botonEnvio" type="submit" value="Elegir"/>
     </form>
 	</div>

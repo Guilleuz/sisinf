@@ -1,8 +1,11 @@
 @charset "UTF-8";
 
 .textoError {
-  	color: white;
+  	color: #ffa7a7;
 	font-weight: bold;
+	font-size: 15px;
+	text-align: left;
+	float: left;
 }
 
 h3 {
@@ -21,10 +24,11 @@ input[type=text] , input[type=password], input[type=number] {
   transition: 0.5s;
   outline: none;
   min-width: -moz-min-content;
+  border-radius: 4px;
 }
 
 input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
-  border: 3px solid #555;
+  border: 3px solid #ff2222;
 }
 
 input[type=button], input[type=submit], input[type=reset] {
@@ -72,9 +76,10 @@ select {
 	overflow-x: hidden;
 	transition: 0.5s;
 	padding-top: 60px;
-	border-color: black;
-	border-width: 0px;
-	border-right-style: solid;
+	border-right: 0px solid rgba(255,255,255,0.30);
+	opacity:0.90;
+	backdrop-filter: blur(6px) saturate(180%);
+  	-webkit-backdrop-filter: blur(6px) saturate(180%);
 }
 
 .sidenav a {
@@ -87,7 +92,7 @@ select {
 }
 
 .sidenav a:hover {
-	color: black;
+	color: #ff8484;
 }
 
 .sidenav .closebtn {
@@ -121,9 +126,21 @@ body{
 	overflow: hidden;
 	background-color: #4d4848;
 	opacity:0.85;
-	border-bottom: solid;
-	border-color: black;
-	border-width: 1px;
+	border-bottom: 1px solid rgba(0,0,0,0.30);
+	backdrop-filter: blur(6px) saturate(180%);
+  	-webkit-backdrop-filter: blur(6px) saturate(180%);
+  	
+}
+
+.caja {
+  min-width: 250px;
+  width: 30%;
+  padding: 5px 30px;
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(6px) saturate(180%);
+  background-color:rgba(77, 72, 72,0.75);
+  border-radius:12px;
+  border: 1px solid rgba(255,255,255,0.30);
 }
 
 .centrar{
