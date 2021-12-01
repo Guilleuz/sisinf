@@ -101,10 +101,10 @@ if (session.getAttribute("usuario") != null) {
 	<div class="centrar caja">
 	<h3>Búsqueda por Poste</h3>
 	<form action="/sisinf/validarPoste" method"get">
-		<input style="width: 60%;"type="text" name="id" id="campoID" value="<%= poste%>" placeholder="Número de poste"/>
-		<input type="submit" value="Buscar">
+		<input style="width:70%;padding-left:" type="text" name="id" id="campoID" value="<%= poste%>" placeholder="Número de poste"/>
+		<input type="submit" style="" value="Buscar">
 	</form>
-	<span class="textoError"><%= msjError%></span>
+	<span class="textoError" style="padding-left:10px"><%= msjError%></span>
     <br>
      
      <h3>Búsqueda por Línea</h3>
@@ -140,18 +140,11 @@ if (session.getAttribute("usuario") != null) {
         <input id="botonEnvio" type="submit" value="Elegir"/>
     </form>
 	</div>
+	<br>
+<div class="bottomBar">
+ <a>© 2021 Ztreet, Inc.</a>
+</div>
 </body>
 </html>
 
-<!-- 
-Formulario
-	Introducir nº de poste
-Enviar
-
-
-Formulario
-	Eleccion de linea
-	Eleccion de sentido -> valor dependiente de la linea
-Enviar
- -->
  

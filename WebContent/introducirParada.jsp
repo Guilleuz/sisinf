@@ -73,7 +73,7 @@ if (session.getAttribute("usuario") != null) {
  <span style="padding-top: 7px;width:20%;font-size:30px;cursor:pointer;float:left;color: white" onclick="openNav()">&nbsp&nbsp&#9776;</span>
  <a href="index.jsp" style="font-family: 'Jockey One', sans-serif;text-decoration:none;width: 60%;margin: 0 auto;text-align: center;float: left;font-size: 40px;font-weight: bold;color: white">ZTREET</a>
 </div>
-<div class="centrar">
+<div class="centrar caja">
 <h3>Introducir Parada de Autobús</h3>
 <form method="post" action="/sisinf/validarParada">
     <input type="text" name="ID" placeholder="Número de poste" value="<%= poste%>"/><br>
@@ -87,5 +87,8 @@ if (session.getAttribute("usuario") != null) {
  <span class="textoError"><%= mensaje%></span>
 </div>
 <br>
+<div class="bottomBar">
+ <a>© 2021 Ztreet, Inc.</a>
+</div>
 </body>
 </html>

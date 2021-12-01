@@ -31,6 +31,35 @@ function closeNav() {
   document.getElementById("mySidenav").style.borderWidth = "0px";
 }
 </script>
+
+
+
+<script>
+
+const progressbar =  document.getElementsByClassName("progress");
+
+const changeProgress = (progress) => {
+	var tiempo = ${llegada.getPrimero()};
+    var tiempoMax = 20 ;
+    var porcentaje;
+    if (tiempo > tiempoMax) {
+    	porcentaje = 0;
+    }
+    else { porcentaje = ((tiempoMax - tiempo) / tiempoMax) * 100;}
+	if (porcentaje > 100) {
+		porcentaje = 100;
+	}
+	console.log(porcentaje);
+  progressbar[0].style.width = porcentaje + "%";
+};
+
+setTimeout(() => changeProgress(4), 1000);
+</script>
+
+
+
+
+
 </head>
 <body>
 <%
@@ -52,15 +81,26 @@ if (session.getAttribute("usuario") != null) {
  <span style="padding-top: 7px;width:20%;font-size:30px;cursor:pointer;float:left;color: white" onclick="openNav()">&nbsp&nbsp&#9776;</span>
  <a href="index.jsp" style="font-family: 'Jockey One', sans-serif;text-decoration:none;width: 60%;margin: 0 auto;text-align: center;float: left;font-size: 40px;font-weight: bold;color: white">ZTREET</a>
 </div>
-<div class="centrar" style="color: white;">
-    <p>
-        ID: ${parada.getID()}<br/><br/> 
-        Nombre: ${parada.getNombre()}<br/><br/> 
-        Sentido: ${parada.getSentido()}<br/><br/>
-        Direccion: ${parada.getDireccion()}<br/><br/>
-        Llegada 1: ${llegada.getPrimero()}<br><br>
-        Llegada 2: ${llegada.getSegundo()}<br><br>  
-    </p>
+
+
+<div class="centrar caja">
+
+
+  <center> <h2> ${parada.getNombre()} - ${parada.getSentido()}</h2> </center>
+   <br><br>
+        <div class="progress-container">
+  <div class="progress" id="prueba"></div>
+      </div>
+    <br/><br/> 
+     Tiempo restante: ${llegada.getPrimero()} minutos
+   <br/><br/> 
+        
+ </div>
+
+
+
+<div class="bottomBar">
+ <a>© 2021 Ztreet, Inc.</a>
 </div>  
 </body>
 </html>

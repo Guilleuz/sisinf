@@ -66,7 +66,7 @@ if (session.getAttribute("usuario") != null) {
  <a href="index.jsp" style="font-family: 'Jockey One', sans-serif;text-decoration:none;width: 60%;margin: 0 auto;text-align: center;float: left;font-size: 40px;font-weight: bold;color: white">ZTREET</a>
 </div>
 
-<div class="centrar">
+<div class="centrar caja">
 	<h3>Iniciar Sesión</h3>
 	<form method="post" action="/sisinf/introducirParada">
 		<input type="text" id="usuario" name="usuario" placeholder="Nombre de Usuario" value="<%= userName%>"/>
@@ -79,6 +79,9 @@ if (session.getAttribute("usuario") != null) {
 		<br>
 		<input type="submit" value="Iniciar Sesión"/>		
 	</form>
+</div>
+<div class="bottomBar">
+ <a>© 2021 Ztreet, Inc.</a>
 </div>
 </body>
 </html>

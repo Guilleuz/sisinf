@@ -58,7 +58,8 @@ $(function() {
     <a href="index.html" style="font-family: 'Jockey One', sans-serif;text-decoration:none;width: 60%;margin: 0 auto;text-align: center;float: left;font-size: 40px;font-weight: bold;color: white">ZTREET</a>
     </div>
 
-    <div class="centrar">
+    <div class="centrar caja">
+    <h3>Estaciones Bizi</h3>
     <form action="/sisinf/estacionBizi" method="get">
         <select id="seleccionarEstacion"name="id">
         <option value="none" selected disabled hidden>
@@ -74,6 +75,9 @@ $(function() {
         <input id="botonEnvio" type="submit" value="Elegir"/>
     </form>
     </div>
+<div class="bottomBar">
+ <a>© 2021 Ztreet, Inc.</a>
+</div>
 </body>
 </html>
 

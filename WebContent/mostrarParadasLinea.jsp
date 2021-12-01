@@ -20,7 +20,17 @@ body {
     url(https://images.unsplash.com/photo-1520105072000-f44fc083e508?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1631&q=80);
 } 
 </style>
+<script src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
 <script>
+$(function() {
+	botonEnvio.disabled = true;
+    $("#seleccionarParada").change(function() {
+    	if($(this).val != "none") {
+    		botonEnvio.disabled = false;
+    	}
+    });
+});  
+
 function openNav() {
   document.getElementById("mySidenav").style.width = "250px";
   document.getElementById("mySidenav").style.borderWidth = "1px";
@@ -29,7 +39,7 @@ function openNav() {
 function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
   document.getElementById("mySidenav").style.borderWidth = "0px";
-}
+} 
 </script>
 </head>
 <body>
@@ -52,9 +62,12 @@ if (session.getAttribute("usuario") != null) {
  <span style="padding-top: 7px;width:20%;font-size:30px;cursor:pointer;float:left;color: white" onclick="openNav()">&nbsp&nbsp&#9776;</span>
  <a href="index.jsp" style="font-family: 'Jockey One', sans-serif;text-decoration:none;width: 60%;margin: 0 auto;text-align: center;float: left;font-size: 40px;font-weight: bold;color: white">ZTREET</a>
 </div>
- <div class="centrar">
+ <div class="centrar caja">
+ 	<h3>Paradas del trayecto</h3>
+ 	<h4>Línea: ${linea} - ${sentido}</h4>
     <form action="/sisinf/paradaBus" method="get">
-        <select name="id">
+        <select id="seleccionarParada" name="id">
+            <option value="none" selected disabled hidden>Seleccione una parada</option>
             <c:forEach items="${paradas}" var="parada">
             <c:set var="ID" value="${parada.getNPoste()}"/>
             <c:set var="dir" value="${parada.getDireccion()}"/>
@@ -62,9 +75,12 @@ if (session.getAttribute("usuario") != null) {
             </c:forEach>
         </select>
         <br/><br/>          
-        <input type="submit" value="Elegir"/>
+        <input id="botonEnvio" type="submit" value="Elegir"/>
     </form>
  </div>
+<div class="bottomBar">
+ <a>© 2021 Ztreet, Inc.</a>
+</div>
 </body>
 </html>
 

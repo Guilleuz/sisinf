@@ -48,12 +48,12 @@ public class llegadaTranviaDAO {
 			if(llegadas.length() > 0) {
 				llegada = llegadas.getJSONObject(0);
 				int minutos = llegada.getInt("minutos");
-				primero = minutos + " minutos";
+				primero = minutos + "";
 			}
 			if(llegadas.length() > 1) {
 				llegada = llegadas.getJSONObject(1);
 				int minutos = llegada.getInt("minutos");
-				segundo = minutos + " minutos";
+				segundo = minutos + "";
 			}
 
 			return new llegadaTranviaVO(parada, primero, segundo);

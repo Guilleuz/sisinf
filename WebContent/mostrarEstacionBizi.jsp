@@ -4,7 +4,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<link rel="stylesheet" type="text/css" href="mostrarDatos.css" media="screen">
 <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
 <link href="https://fonts.googleapis.com/css2?family=Jockey+One&display=swap" rel="stylesheet"> 
 <link rel="stylesheet" type="text/css" href="estilo.css" media="screen">
@@ -22,6 +21,7 @@ body {
     url(https://images.unsplash.com/photo-1559348349-86f1f65817fe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80);
 } 
 </style>
+<script src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
 <script>
 function openNav() {
   document.getElementById("mySidenav").style.width = "250px";
@@ -32,7 +32,27 @@ function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
   document.getElementById("mySidenav").style.borderWidth = "0px";
 }
+
 </script>
+
+<script>
+
+const progressbar =  document.getElementsByClassName("progress");
+
+const changeProgress = (progress) => {
+	var bizis = ${estacion.getBicis()};
+  var capacidad =${estacion.getCapacidad()};
+	var porcentaje = (bizis / capacidad) * 100;
+	if (porcentaje > 100) {
+		porcentaje = 100;
+	}
+	console.log(porcentaje);
+  progressbar[0].style.width = porcentaje + "%";
+};
+
+setTimeout(() => changeProgress(4), 1000);
+</script>
+
 </head>
 <body>
 <%
@@ -54,15 +74,22 @@ if (session.getAttribute("usuario") != null) {
  <span style="padding-top: 7px;width:20%;font-size:30px;cursor:pointer;float:left;color: white" onclick="openNav()">&nbsp&nbsp&#9776;</span>
  <a href="index.jsp" style="font-family: 'Jockey One', sans-serif;text-decoration:none;width: 60%;margin: 0 auto;text-align: center;float: left;font-size: 40px;font-weight: bold;color: white">ZTREET</a>
 </div>
-<div class="centrar">
-    ${estacion.getDireccion()}<br/><br/> 
+<div class="centrar caja">
+
+
+  <center> <h2> ${estacion.getDireccion()}</h2> </center>
+   <br><br>
+        <div class="progress-container">
+  <div class="progress" id="prueba"></div>
+      </div>
+    <br/><br/> 
+    ${estacion.getBicis()} disponibles de ${estacion.getCapacidad()}
+   <br/><br/> 
         
-        <p style="text-align: center;">
-            Capacidad: ${estacion.getCapacidad()}<br/><br/> 
-            Bicis Disponibles: ${estacion.getBicis()}<br/><br/>
-         </p>
-    
  </div>
+<div class="bottomBar">
+ <a>© 2021 Ztreet, Inc.</a>
+</div>
 </body>
 </html>
 

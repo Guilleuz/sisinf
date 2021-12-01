@@ -39,6 +39,8 @@ public class servletListaParadas extends HttpServlet {
 		
 		// Mostramos dicho listado en mostrarParadasLinea.jsp
 		request.setAttribute("paradas", paradasBus);
+		request.setAttribute("linea", nombre);
+		request.setAttribute("sentido", sentido);
         request.getRequestDispatcher("mostrarParadasLinea.jsp").forward(request, response);
     }
 	

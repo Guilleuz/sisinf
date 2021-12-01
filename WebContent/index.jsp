@@ -91,14 +91,8 @@ if (session.getAttribute("usuario") != null) {
               
   </p>
  </div>
-
-<!-- <div class="bottomBar">
-  <a href="#home" class="active">Home</a>
-  <a href="#news">News</a>
-  <a href="#contact">Contact</a>
-</div> -->
+<div class="bottomBar">
+ <a>© 2021 Ztreet, Inc.</a>
+</div>
 </body>
-
-
-
 </html>

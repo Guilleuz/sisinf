@@ -44,8 +44,8 @@ public class llegadaAutobusDAO {
 				llegada = llegadas.getJSONObject(i);
 				String linea = llegada.getString("linea");
 				String sentido = llegada.getString("destino");
-				String primero = llegada.getString("primero");
-				String segundo = llegada.getString("segundo");
+				String primero = llegada.getString("primero").split(" ")[0];
+				String segundo = llegada.getString("segundo").split(" ")[0];
 				lista.add(new llegadaAutobusVO(nPoste, linea, sentido, primero, segundo));
 			}
 			

@@ -36,9 +36,9 @@ public class datosEstacion extends HttpServlet {
         	e.printStackTrace();
         }
         
-        // Mostraremos los datos de la estación en mostrarDatos.jsp
+        // Mostraremos los datos de la estación en mostrarEstacionBizi.jsp
         request.setAttribute("estacion", estacion);
-        request.getRequestDispatcher("mostrarDatos.jsp").forward(request, response);
+        request.getRequestDispatcher("mostrarEstacionBizi.jsp").forward(request, response);
     }
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
