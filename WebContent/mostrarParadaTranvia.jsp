@@ -51,10 +51,23 @@ const changeProgress = (progress) => {
 	}
 	console.log(porcentaje);
   progressbar[0].style.width = porcentaje + "%";
+    
+    var tiempo2 = ${llegada.getSegundo()};
+    var porcentaje2;
+    if (tiempo2 > tiempoMax) {
+    	porcentaje2 = 0;
+    }
+    else { porcentaje2 = ((tiempoMax - tiempo2) / tiempoMax) * 100;}
+	if (porcentaje2 > 100) {
+		porcentaje2 = 100;
+	}
+	console.log(porcentaje2);
+	progressbar[1].style.width = porcentaje2 + "%";
 };
 
 setTimeout(() => changeProgress(4), 1000);
 </script>
+
 
 
 
@@ -91,8 +104,16 @@ if (session.getAttribute("usuario") != null) {
         <div class="progress-container">
   <div class="progress" id="prueba"></div>
       </div>
-    <br/><br/> 
-     Tiempo restante: ${llegada.getPrimero()} minutos
+      <br/><br/> 
+T1 - Tiempo restante: ${llegada.getPrimero()} minutos 
+   <br/><br/> 
+
+    <br><br>
+        <div class="progress-container">
+  <div class="progress" id="prueba2"></div>
+      </div> 
+      <br/><br/> 
+     T2 - Tiempo restante: ${llegada.getSegundo()} minutos
    <br/><br/> 
         
  </div>

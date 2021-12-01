@@ -6,6 +6,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.*;
 import javax.ws.rs.client.Client;
@@ -43,9 +45,15 @@ public class llegadaAutobusDAO {
 			for (int i = 0; i < llegadas.length(); i++) {
 				llegada = llegadas.getJSONObject(i);
 				String linea = llegada.getString("linea");
+				Pattern patron = Pattern.compile("^[0-9]+ minutos\\.$");
+				String primero = "0";
+				String segundo = "0";
 				String sentido = llegada.getString("destino");
-				String primero = llegada.getString("primero").split(" ")[0];
-				String segundo = llegada.getString("segundo").split(" ")[0];
+				Matcher m = patron.matcher(llegada.getString("primero"));
+				if (m.matches()) primero = llegada.getString("primero").split(" ")[0];
+				
+				m = patron.matcher(llegada.getString("segundo"));
+				if (m.matches()) segundo = llegada.getString("segundo").split(" ")[0];
 				lista.add(new llegadaAutobusVO(nPoste, linea, sentido, primero, segundo));
 			}
 			

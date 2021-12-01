@@ -9,6 +9,8 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import org.json.JSONObject;
+
 public class servletParadaBus extends HttpServlet {
 	/**
 	 * 
@@ -41,9 +43,19 @@ public class servletParadaBus extends HttpServlet {
         	e.printStackTrace();
         }
 
-		// Mostramos la información de la parada y las llegadas en mostrarParadaBus,jsp
+		List<String> primerasLlegadas = new LinkedList<String>();
+		for (llegadaAutobusVO i : llegada) {
+			primerasLlegadas.add(i.getPrimero());
+		}
+		
+		HashMap<String, List<String>> llegadas = new HashMap<String, List<String>>();
+		llegadas.put("result", primerasLlegadas);
+		String llegadasJSON = new JSONObject(llegadas).toString();
+
+		// Mostramos la información de la parada y las llegadas en mostrarParadaBus.jsp
 		request.setAttribute("bus", bus);
 		request.setAttribute("llegadas", llegada);
+		request.setAttribute("llegadasJSON", llegadasJSON);
         request.getRequestDispatcher("mostrarParadaBus.jsp").forward(request, response);
 	
 	}

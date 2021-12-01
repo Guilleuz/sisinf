@@ -31,6 +31,38 @@ function closeNav() {
   document.getElementById("mySidenav").style.borderWidth = "0px";
 }
 </script>
+
+
+<script>
+
+const progressbar =  document.getElementsByClassName("progress");
+let data = '${llegadasJSON}'
+let json = JSON.parse(data);
+
+const changeProgress = (progress) => {
+  console.log(progressbar.length);
+  for(let i = 0; i < progressbar.length; i++){
+      console.log(json["result"][i]);
+      var tiempo = json["result"][i];
+      var tiempoMax = 20 ;
+      var porcentaje;
+      
+      if (tiempo > tiempoMax) {porcentaje = 0;}
+      else { porcentaje = ((tiempoMax - tiempo) / tiempoMax) * 100;}
+      
+      if (porcentaje > 100) { porcentaje = 100;}
+      
+      console.log(porcentaje);
+      progressbar[i].style.width = porcentaje + "%";
+  }
+};
+setTimeout(() => changeProgress(4), 1000);
+</script>
+
+
+
+
+
 </head>
 <body>
 <%
@@ -54,14 +86,17 @@ if (session.getAttribute("usuario") != null) {
 </div>
   <div class="centrar caja" style="color: white;">
    <p>
-   Número de Poste: ${bus.getNPoste()}<br>
-   Direccion: ${bus.getDireccion()}<br>
-   Llegadas<br><br>
+  ${bus.getDireccion()}<br><br>
+   <span style="font-weight: bold;"> Llegadas</span><br> 
    <c:forEach items="${llegadas}" var="llegada">
-   Linea: ${llegada.getLinea()} <br>
-   Sentido: ${llegada.getSentido()}<br>
-   Primero: ${llegada.getPrimero()}<br>
-   Segundo: ${llegada.getSegundo()}<br><br>
+      <br>
+       <div class="progress-container">
+  <div class="progress" id="prueba"></div>
+      </div>
+     <br>
+   ${llegada.getLinea()} - ${llegada.getSentido()}<br>
+   Tiempo restante: ${llegada.getPrimero()} minutos <br>
+   <span style="font-size: 20px;"> Siguiente en : ${llegada.getSegundo()} minutos</span><br><br>
    </c:forEach>
    </p>
   </div>

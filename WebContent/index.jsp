@@ -40,12 +40,7 @@
 <link rel="stylesheet" type="text/css" href="estilo.css" media="screen">
 <style>
 body {
-    background-image: 
-    linear-gradient(
-      rgba(0, 0, 0, 0.25),
-      rgba(0, 0, 0, 0.25)
-    ),
-    url(https://images2.alphacoders.com/545/thumb-1920-545232.jpg);
+    background-color:#4d4848;
 } 
 </style>
 <script>
@@ -83,14 +78,9 @@ if (session.getAttribute("usuario") != null) {
 </div>
 
 <!-- Iconos de acceso a menu -->
- <div class="centrar">
-  <p>
-   <a href="/sisinf/menuBizi"><img class="imagenBizi"  src="https://i.ibb.co/7ypg8G8/icono-bici-png.gif"> </a>
-   <a href="/sisinf/menuBus"><img class="imagenBus" src="https://i.ibb.co/KDTFDDv/icono-bus-png.png"></a>
-   <a href="/sisinf/menuTranvia"><img class="imagenTranvia" src="https://i.ibb.co/nrDkHLQ/icono-tranvia-png.png"></a>  
-              
-  </p>
- </div>
+ <div class="imgMenu" style="text-align: center;">
+  <a href="/sisinf/menuBizi"><img src="https://images.unsplash.com/photo-1572417227948-70bbb81e814c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NzN8fGJpa2V8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"></a><a href="/sisinf/menuBus"><img src="https://images.unsplash.com/photo-1564694202883-46e7448c1b26?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8YnVzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"></a><a href="/sisinf/menuTranvia"><img src="https://images.unsplash.com/photo-1612085546117-01da93b3f8e9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"></a>
+</div>
 <div class="bottomBar">
  <a>© 2021 Ztreet, Inc.</a>
 </div>
