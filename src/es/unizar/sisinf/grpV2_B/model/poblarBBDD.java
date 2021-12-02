@@ -231,6 +231,7 @@ public class poblarBBDD extends HttpServlet {
 					JSONObject paradaS2 = paradasLinea.getJSONObject(paradasLinea.length() - 2);
 					String sentido1 = "Sentido único";
 					String sentido2 = "Sentido único";
+					// Líneas nocturnas y circulares son de sentido único,
 					Pattern patronSentidoUnico = Pattern.compile("^(N[0-9]+|CI[0-9]+)$");
 					m = patronSentidoUnico.matcher(nombre);
 					if(paradaS1.has("description") && paradaS2.has("description") && !m.matches()) {
