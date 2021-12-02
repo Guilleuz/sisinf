@@ -16,30 +16,33 @@ CREATE TABLE BiziStation (
     id int PRIMARY KEY, /* int */
     capacity int NOT NULL, 
     available int,
-    direction varchar(100) NOT NULL,
-    localization Geometry('POINT', 4326) NOT NULL
+    direction varchar(200) NOT NULL,
+    lat real NOT NULL,
+    long real NOT NULL
 );
 
 
 CREATE TABLE TramStation ( 
     id int PRIMARY KEY, /* int */
-    orden int NOT NULL,
-    name varchar(50) NOT NULL, 
-    way varchar(50) NOT NULL,
-    direction varchar(50) NOT NULL,
-    localization Geometry('POINT', 4326) NOT NULL
+    name varchar(200) NOT NULL, 
+    way varchar(200) NOT NULL,
+    orden int not null,
+    direction varchar(200) NOT NULL,
+    lat real NOT NULL,
+    long real NOT NULL
 );
 
 CREATE TABLE BusStation ( 
     id int PRIMARY KEY, /* int */
-    direction varchar(50) NOT NULL,
-    localization Geometry('POINT', 4326) NOT NULL
+    direction varchar(200) NOT NULL,
+    lat real NOT NULL,
+    long real NOT NULL
 );
 
 CREATE TABLE BusLine ( 
     id int PRIMARY KEY, /* int */
-    name varchar(50) NOT NULL, 
-    way varchar(50) NOT NULL
+    name varchar(200) NOT NULL, 
+    way varchar(200) NOT NULL
 );
 
 CREATE TABLE BusRoute ( 

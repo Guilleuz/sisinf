@@ -219,71 +219,68 @@ public class poblarBBDD extends HttpServlet {
 					JSONArray paradasLinea = respuesta.getJSONArray("result");
 					JSONObject paradaLinea;
 					
-					if (paradasLinea.length() < 2) {
+					if (paradasLinea.length() <= 2) {
 						System.out.println("Linea " + linea + " saltada");
 						continue;
 					}
 					
-					// Obtenemos el nº de poste de la 1ª y la penúltima parada del listado
-					// La 1ª indicará uno de los sentidos, y la penúltima el otro
-					// Se utiliza la penúltima ya que algunas línea empiezan y acaban en la misma parada
-					JSONObject paradaS1 = paradasLinea.getJSONObject(1);
+					// Obtenemos el nº de poste de la 2ª y la penúltima parada del listado
+					// La 2ª indicará uno de los sentidos, y la penúltima el otro
+					// Se utilizan la segunda y la penúltima ya que algunas línea empiezan y acaban en la misma parada
+					JSONObject paradaS1 = paradasLinea.getJSONObject(2);
 					JSONObject paradaS2 = paradasLinea.getJSONObject(paradasLinea.length() - 2);
 					String sentido1 = "Sentido único";
 					String sentido2 = "Sentido único";
-					if(paradaS1.has("description") && paradaS2.has("description")) {
+					Pattern patronSentidoUnico = Pattern.compile("^(N[0-9]+|CI[0-9]+)$");
+					m = patronSentidoUnico.matcher(nombre);
+					if(paradaS1.has("description") && paradaS2.has("description") && !m.matches()) {
 						String poste1 = paradaS1.getString("description").split(" ")[1];
 						String poste2 = paradaS2.getString("description").split(" ")[1];
 						
-						
 						// Obtenemos el sentido de la línea en cada parada
-						URL urlParada1 = new URL("http://www.zaragoza.es/api/recurso/urbanismo-infraestructuras/"
-								+ "transporte-urbano/poste/tuzsa-" + poste1 + ".json?fl=destinos");
-						URL urlParada2 = new URL("http://www.zaragoza.es/api/recurso/urbanismo-infraestructuras/"
-								+ "transporte-urbano/poste/tuzsa-" + poste2 + ".json?fl=destinos");
 						
-						// Realizamos la consulta para la primera parada
-						conn = (HttpURLConnection) urlParada1.openConnection();
-						conn.setRequestMethod("GET");
-						conn.connect();
-						String resParada1 = "";
-						scanner.close();
-						scanner = new Scanner(urlParada1.openStream());
-						while (scanner.hasNext()) {
-					       resParada1 += scanner.nextLine();
-					    }
-						
-						JSONObject resParada = new JSONObject(resParada1);
-						JSONArray destinos = resParada.getJSONArray("destinos");
-						// Buscamos en la parada, la llegada de un autobús de nuestra línea
-						// Con esa llegada, podemos obtener el sentido del autobú
-						for (int j = 0; j < destinos.length(); j++) {
-							if (destinos.getJSONObject(j).getString("linea").equals(nombre)) {
-								sentido1 = destinos.getJSONObject(j).getString("destino");
-								sentido1 = sentido1.substring(0, sentido1.length() - 1);
-								break;
+						int poste = Integer.valueOf(poste1);
+						try {
+							List<llegadaAutobusVO> llegadas = new llegadaAutobusDAO().getLlegadas(poste);
+							boolean encontrado = false;
+							// Buscamos en la parada, la llegada de un autobús de nuestra línea
+							// Con esa llegada, podemos obtener el sentido del autobús
+							for (llegadaAutobusVO l: llegadas) {
+								if (l.getLinea().equals(nombre)) {
+									sentido1 = l.getSentido();
+									sentido1 = sentido1.substring(0, sentido1.length() - 1);
+									encontrado = true;
+									break;
+								}
 							}
+							if (!encontrado) {
+								throw new Exception();
+							}
+						} catch (Exception e) {
+							System.out.println("Linea " + linea + " saltada");
+							continue;
 						}
 						
-						// Realizamos la segunda consulta
-						conn = (HttpURLConnection) urlParada2.openConnection();
-						conn.setRequestMethod("GET");
-						conn.connect();
-						String resParada2 = "";
-						scanner.close();
-						scanner = new Scanner(urlParada2.openStream());
-						while (scanner.hasNext()) {
-					       resParada2 += scanner.nextLine();
-					    }
-						
-						resParada = new JSONObject(resParada2);
-						destinos = resParada.getJSONArray("destinos");
-						for (int j = 0; j < destinos.length(); j++) {
-							if (destinos.getJSONObject(j).getString("linea").equals(nombre)) {
-								sentido2 = destinos.getJSONObject(j).getString("destino");
-								sentido2 = sentido2.substring(0, sentido2.length() - 1);
-								break;
+						poste = Integer.valueOf(poste2);
+						try {
+							List<llegadaAutobusVO> llegadas = new llegadaAutobusDAO().getLlegadas(poste);
+							boolean encontrado = false;
+							// Buscamos en la parada, la llegada de un autobús de nuestra línea
+							// Con esa llegada, podemos obtener el sentido del autobús
+							for (llegadaAutobusVO l: llegadas) {
+								if (l.getLinea().equals(nombre)) {
+									sentido2 = l.getSentido();
+									sentido2 = sentido2.substring(0, sentido2.length() - 1);
+									encontrado = true;
+									break;
+								}
 							}
+							if (!encontrado) {
+								throw new Exception();
+							}
+						} catch (Exception e) {
+							System.out.println("Linea " + linea + " saltada");
+							continue;
 						}
 					}
 					
@@ -301,7 +298,7 @@ public class poblarBBDD extends HttpServlet {
 						if (paradaLinea.has("description")) {
 							int nPoste = 0;
 							try {
-								nPoste = Integer.valueOf(paradaLinea.getString("description").split(" ")[1]);;
+								nPoste = Integer.valueOf(paradaLinea.getString("description").split(" ")[1]);
 							} catch (NumberFormatException ex){
 			                    ex.printStackTrace();
 			                }
@@ -323,7 +320,7 @@ public class poblarBBDD extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		response.sendRedirect("index.html");
+		response.sendRedirect("index.jsp");
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
