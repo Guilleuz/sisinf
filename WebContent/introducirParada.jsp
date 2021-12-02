@@ -59,8 +59,8 @@
 
   <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="/sisinf/menuBus">AutobÃºs</a>
-    <a href="/sisinf/menuTranvia">TranvÃ­Â­a</a>
+    <a href="/sisinf/menuBus">Autobús</a>
+    <a href="/sisinf/menuTranvia">Tranví­a</a>
     <a href="/sisinf/menuBizi">Bizi</a>
     <a href="iniciarSesion.jsp">
       <%= opcion%>
@@ -73,19 +73,19 @@
     <a href="index.jsp" class="logo">ZTREET</a>
   </div>
   <div class="centrar caja">
-    <h3>Introducir Parada de AutobÃºs</h3>
+    <h3>Introducir Parada de Autobús</h3>
     <form method="post" action="/sisinf/validarParada">
-      <input type="text" name="ID" placeholder="NÃºmero de poste" value="<%= poste%>" /><br>
+      <input type="text" name="ID" placeholder="Número de poste" value="<%= poste%>" /><br>
       <span class="textoError">
         <%= errorPoste%>
       </span>
-      <input type="text" name="direccion" placeholder="Direccion" value="<%= dir%>" /><br>
+      <input type="text" name="direccion" placeholder="Dirección" value="<%= dir%>" /><br>
       <span class="textoError">
         <%= errorDir%>
       </span>
       <input type="number" step="any" name="latitud" placeholder="latitud" value="<%= latitud%>" /><br>
       <input type="number" step="any" name="longitud" placeholder="longitud" value="<%= longitud%>" /><br>
-      <input type="submit" value="AÃ±adir" />
+      <input type="submit" value="Añadir" />
     </form>
     <span class="textoError">
       <%= mensaje%>
@@ -93,7 +93,7 @@
   </div>
   <br>
   <div class="bottomBar">
-    <a>Â© 2021 Ztreet, Inc.</a>
+    <a>© 2021 Ztreet, Inc.</a>
   </div>
 </body>
 

@@ -72,7 +72,7 @@
     <form action="/sisinf/estacionBizi" method="get">
       <select id="seleccionarEstacion" name="id">
         <option value="none" selected disabled hidden>
-          Seleccione Estacion
+          Seleccione Estación
         </option>
         <c:forEach items="${lista}" var="Estacion">
           <c:set var="ID" value="${Estacion.getID()}" />
