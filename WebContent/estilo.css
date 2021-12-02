@@ -28,7 +28,7 @@ input[type=text] , input[type=password], input[type=number] {
 }
 
 input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
-  border: 3px solid #ff2222;
+ 	 border: 3px solid #ff2222;
 }
 
 input[type=button], input[type=submit], input[type=reset] {
@@ -113,7 +113,7 @@ select:focus {
 	.sidenav a {font-size: 18px;}
 }
 
-body{
+body {
 	padding: 0px;
 	margin: 0px;
 	background-size: cover;
@@ -123,6 +123,18 @@ body{
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	font-family: 'Raleway';font-size: 22px;
+}
+
+.logo {
+	font-family: 'Jockey One', sans-serif;
+	text-decoration:none;
+	width: 60%;
+	margin: 0 auto;
+	text-align: center;
+	float: left;
+	font-size: 40px;
+	font-weight: bold;
+	color: white;
 }
 
 .navbar {
@@ -138,15 +150,15 @@ body{
 }
 
 .caja {
-  color: white;
-  min-width: 250px;
-  width: 30%;
-  padding: 5px 30px;
-  backdrop-filter: blur(15px) saturate(180%);
-  -webkit-backdrop-filter: blur(6px) saturate(180%);
-  background-color:rgba(77, 72, 72,0.75);
-  border-radius:12px;
-  border: 1px solid rgba(255,255,255,0.30);
+	color: white;
+	min-width: 250px;
+	width: 30%;
+	padding: 5px 30px;
+	backdrop-filter: blur(15px) saturate(180%);
+	-webkit-backdrop-filter: blur(6px) saturate(180%);
+	background-color:rgba(77, 72, 72,0.75);
+	border-radius:12px;
+ 	 border: 1px solid rgba(255,255,255,0.30);
 }
 
 .centrar{
@@ -208,13 +220,11 @@ body{
 }
 
 .progress {
-  height: 100%;
-  width: 0;
-  border-radius: 0.4rem;
-
-  background: #ff4754;
-
-  transition: width 0.4s ease;
+	height: 100%;
+	width: 0;
+	border-radius: 0.4rem;
+	background: #ff4754;
+	transition: width 0.4s ease;
 }
 
 img {
@@ -223,7 +233,6 @@ img {
 	border: solid;
 	border-color: black;
 	border-width: 1px;
-	
     transition: all 0.5s ease ;
 }
 
