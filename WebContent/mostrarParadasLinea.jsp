@@ -51,9 +51,9 @@
   }%>
   <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="/sisinf/menuBus">Autobús</a>
-    <a href="/sisinf/menuTranvia">Tranví­a</a>
-    <a href="/sisinf/menuBizi">Bizi</a>
+    <a href="/menuBus">Autobús</a>
+    <a href="/menuTranvia">Tranví­a</a>
+    <a href="/menuBizi">Bizi</a>
     <a href="iniciarSesion.jsp">
       <%= opcion%>
     </a>
@@ -67,7 +67,7 @@
   <div class="centrar caja">
     <h3>Paradas del trayecto</h3>
     <h4>Línea: ${linea} - ${sentido}</h4>
-    <form action="/sisinf/paradaBus" method="get">
+    <form action="/paradaBus" method="get">
       <select id="seleccionarParada" name="id">
         <option value="none" selected disabled hidden>Seleccione una parada</option>
         <c:forEach items="${paradas}" var="parada">

@@ -59,9 +59,9 @@
 
   <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="/sisinf/menuBus">Autobús</a>
-    <a href="/sisinf/menuTranvia">Tranví­a</a>
-    <a href="/sisinf/menuBizi">Bizi</a>
+    <a href="/menuBus">Autobús</a>
+    <a href="/menuTranvia">Tranví­a</a>
+    <a href="/menuBizi">Bizi</a>
     <a href="iniciarSesion.jsp">
       <%= opcion%>
     </a>
@@ -74,7 +74,7 @@
   </div>
   <div class="centrar caja">
     <h3>Introducir Parada de Autobús</h3>
-    <form method="post" action="/sisinf/validarParada">
+    <form method="post" action="/validarParada">
       <input type="text" name="ID" placeholder="Número de poste" value="<%= poste%>" /><br>
       <span class="textoError">
         <%= errorPoste%>

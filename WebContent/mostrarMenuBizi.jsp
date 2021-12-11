@@ -53,9 +53,9 @@
   }%>
   <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="/sisinf/menuBus">Autobús</a>
-    <a href="/sisinf/menuTranvia">Tranvía</a>
-    <a href="/sisinf/menuBizi">Bizi</a>
+    <a href="/menuBus">Autobús</a>
+    <a href="/menuTranvia">Tranvía</a>
+    <a href="/menuBizi">Bizi</a>
     <a href="iniciarSesion.jsp">
       <%= opcion%>
     </a>
@@ -69,7 +69,7 @@
 
   <div class="centrar caja">
     <h3>Estaciones Bizi</h3>
-    <form action="/sisinf/estacionBizi" method="get">
+    <form action="/estacionBizi" method="get">
       <select id="seleccionarEstacion" name="id">
         <option value="none" selected disabled hidden>
           Seleccione Estación

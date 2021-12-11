@@ -82,9 +82,9 @@ if (session.getAttribute("usuario") != null) {
 }%>
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="/sisinf/menuBus">Autobús</a>
-  <a href="/sisinf/menuTranvia">Tranví­a</a>
-  <a href="/sisinf/menuBizi">Bizi</a>
+  <a href="/menuBus">Autobús</a>
+  <a href="/menuTranvia">Tranví­a</a>
+  <a href="/menuBizi">Bizi</a>
   <a href="iniciarSesion.jsp"><%= opcion%></a>
 </div>
 
@@ -103,7 +103,7 @@ if (session.getAttribute("usuario") != null) {
 	%>
 	<div class="centrar caja">
 	<h3>Búsqueda por Poste</h3>
-	<form action="/sisinf/validarPoste" method"get">
+	<form action="/validarPoste" method"get">
 		<input style="width:70%;padding-left:" type="text" name="id" id="campoID" value="<%= poste%>" placeholder="Número de poste"/>
 		<input type="submit" style="" value="Buscar">
 	</form>
@@ -111,7 +111,7 @@ if (session.getAttribute("usuario") != null) {
     <br>
      
      <h3>Búsqueda por Línea</h3>
-	<form action="/sisinf/linea" method="get">
+	<form action="/linea" method="get">
 
         <select id="seleccionarLinea" name="linea">
         	<option value="none" selected disabled hidden>

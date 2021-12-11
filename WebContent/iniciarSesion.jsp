@@ -54,9 +54,9 @@
 	}%>
 	<div id="mySidenav" class="sidenav">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-		<a href="/sisinf/menuBus">Autobús</a>
-		<a href="/sisinf/menuTranvia">Tranví­a</a>
-		<a href="/sisinf/menuBizi">Bizi</a>
+		<a href="/menuBus">Autobús</a>
+		<a href="/menuTranvia">Tranví­a</a>
+		<a href="/menuBizi">Bizi</a>
 		<a href="iniciarSesion.jsp">
 			<%= opcion%>
 		</a>
@@ -70,7 +70,7 @@
 
 	<div class="centrar caja">
 		<h3>Iniciar Sesión</h3>
-		<form method="post" action="/sisinf/introducirParada">
+		<form method="post" action="/introducirParada">
 			<input type="text" id="usuario" name="usuario" placeholder="Nombre de Usuario" value="<%= userName%>" />
 			<br>
 			<span class="textoError">
